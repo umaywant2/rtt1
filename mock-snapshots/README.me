@@ -1,1 +1,114 @@
+# RTT/1 — Mock Snapshots  
+**Directory:** `mock-snapshots/`  
+**Mode:** S‑mode  
+**Session:** rtt=1 · coherence=declared · drift=bounded · paradox=structural  
 
+This directory contains the **deterministic snapshot suite** used to validate the RTT/1 structural engine.  
+Snapshots provide a stable reference surface for CI, development, and front‑end integration.
+
+Snapshots do **not** represent real analysis.  
+They are **synthetic**, **safe**, and **canon‑aligned** mock outputs designed to ensure:
+
+- pipeline determinism  
+- structural consistency  
+- CI reproducibility  
+- drift‑bounded behavior  
+- stable front‑end rendering  
+
+---
+
+## Purpose
+Snapshots serve as **frozen structural outputs** for RTT/1.  
+They allow developers and CI systems to verify that:
+
+- the RTT/1 pipeline produces consistent shapes  
+- structural layers remain aligned with the canon  
+- changes to the engine do not introduce drift  
+- front‑end wrappers behave predictably  
+- mock mode remains deterministic  
+
+Snapshots are used by:
+
+- `snapshots/run.js`  
+- CI pipelines (`ci.yml`)  
+- front‑end test harnesses  
+- module‑level validation tools  
+
+---
+
+## Snapshot Files
+Each file corresponds to one RTT/1 layer or the full pipeline.
+
+### **Layer Snapshots**
+- `clarity_surface.snapshot.json`  
+- `load_bearing.snapshot.json`  
+- `contradiction_scan.snapshot.json`  
+- `structural_critique.snapshot.json`  
+- `diagnostic_surface.snapshot.json`  
+
+Each snapshot contains:
+
+- canonical keys  
+- deterministic mock values  
+- stable structural geometry  
+- drift‑bounded placeholders  
+
+### **Full Pipeline Snapshot**
+- `full_pipeline.snapshot.json`  
+
+This file includes:
+
+- engine identity  
+- session metadata  
+- all five RTT/1 layers  
+- canonical structural shape  
+
+---
+
+## Manifest & Schema
+Supporting files:
+
+- `index.json` — snapshot manifest  
+- `schema.json` — validation schema  
+- `manifest.svg` — visual snapshot map  
+
+These ensure:
+
+- machine‑readable indexing  
+- schema‑validated consistency  
+- visual clarity for developers  
+
+---
+
+## Snapshot Runner
+The snapshot suite is exercised by:
+
+- `snapshots/run.js`
+
+This runner:
+
+- loads each snapshot  
+- executes RTT/1  
+- compares live output to mock output  
+- prints pass/fail diff surfaces  
+
+It is deterministic and CI‑safe.
+
+---
+
+## Canon Alignment
+Snapshots follow the TriadicFrameworks canon:
+
+- clarity‑first  
+- structure‑only  
+- drift‑bounded  
+- deterministic  
+- coherent  
+
+They do not interpret meaning.  
+They validate **structure only**.
+
+---
+
+## License
+Open educational use permitted.
