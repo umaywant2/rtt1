@@ -1,1 +1,18 @@
+{
+  "name": "RTT/1 Clarity Surface Test",
+  "version": "1.0.0-alpha",
+  "input": {
+    "text": "The system maintains structural stability across its components."
+  },
+  "expected": {
+    "clarity_surface": {
+      "summary": "Input expresses a stable structural claim.",
+      "signals": ["system", "structural", "stability", "components"],
+      "operators": ["claim", "structure"],
+      "coherence": "declared",
+      "drift": "bounded",
+      "paradox": "structural"
+    }
+  }
+}
 
