@@ -1,1 +1,8 @@
+{
+  "diagnostic_surface": {
+    "diagnostic": {
+      "summary": "Mock diagnostic summary for RTT/1 CI testing."
+    }
+  }
+}
 
