@@ -1,1 +1,234 @@
+/* ============================================================
+   RTT/1 — Core Stylesheet
+   File: assets/css/rtt1.css
+   Session: rtt=1 | coherence=declared | drift=bounded
+   ============================================================ */
+
+/* Root theme ------------------------------------------------ */
+
+:root {
+  --rtt-bg: #0b1020;
+  --rtt-bg-alt: #1c2331;
+  --rtt-surface: #111827;
+
+  --rtt-border: #374151;
+  --rtt-border-soft: #4b5563;
+
+  --rtt-text: #e5e7eb;
+  --rtt-text-soft: #9ca3af;
+  --rtt-text-muted: #6b7280;
+
+  --rtt-accent: #3b82f6;
+  --rtt-accent-soft: #60a5fa;
+  --rtt-accent-strong: #2563eb;
+
+  --rtt-success: #22c55e;
+  --rtt-warning: #facc15;
+  --rtt-error: #ef4444;
+
+  --rtt-radius-sm: 4px;
+  --rtt-radius-md: 8px;
+  --rtt-radius-lg: 12px;
+
+  --rtt-shadow-soft: 0 10px 25px rgba(0, 0, 0, 0.35);
+  --rtt-shadow-hard: 0 18px 40px rgba(0, 0, 0, 0.55);
+
+  --rtt-font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+}
+
+/* Global ---------------------------------------------------- */
+
+body {
+  margin: 0;
+  padding: 0;
+  background: radial-gradient(circle at top, #111827 0, #020617 55%, #000 100%);
+  color: var(--rtt-text);
+  font-family: var(--rtt-font-sans);
+}
+
+/* Layout shell ---------------------------------------------- */
+
+.rtt-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+}
+
+.rtt-shell__header {
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--rtt-border-soft);
+  background: linear-gradient(90deg, #020617, #0b1020 40%, #020617 100%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.rtt-shell__title {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--rtt-text-soft);
+}
+
+.rtt-shell__session {
+  font-size: 12px;
+  color: var(--rtt-text-muted);
+}
+
+/* Main content ---------------------------------------------- */
+
+.rtt-shell__main {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr);
+  gap: 16px;
+  padding: 16px 24px 24px;
+}
+
+/* Panels ---------------------------------------------------- */
+
+.rtt-panel {
+  background: radial-gradient(circle at top left, #111827 0, #020617 60%);
+  border-radius: var(--rtt-radius-md);
+  border: 1px solid var(--rtt-border);
+  box-shadow: var(--rtt-shadow-soft);
+  padding: 14px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.rtt-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.rtt-panel__title {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--rtt-text-soft);
+}
+
+.rtt-panel__badge {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--rtt-border-soft);
+  color: var(--rtt-text-muted);
+}
+
+/* Snapshot grid --------------------------------------------- */
+
+.rtt-snapshots-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+}
+
+.rtt-snapshot-card {
+  background: linear-gradient(135deg, #020617, #111827);
+  border-radius: var(--rtt-radius-md);
+  border: 1px solid var(--rtt-border-soft);
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.rtt-snapshot-card__name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--rtt-text);
+}
+
+.rtt-snapshot-card__file {
+  font-size: 11px;
+  color: var(--rtt-text-muted);
+}
+
+.rtt-snapshot-card__status {
+  margin-top: 4px;
+  font-size: 11px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.rtt-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--rtt-success);
+}
+
+/* Diff viewer ----------------------------------------------- */
+
+.rtt-diff {
+  font-family: "JetBrains Mono", "SF Mono", Menlo, monospace;
+  font-size: 11px;
+  line-height: 1.5;
+  background: #020617;
+  border-radius: var(--rtt-radius-md);
+  border: 1px solid #1f2937;
+  padding: 10px 12px;
+  overflow: auto;
+}
+
+.rtt-diff__line {
+  white-space: pre;
+}
+
+.rtt-diff__line--add {
+  color: #bbf7d0;
+}
+
+.rtt-diff__line--remove {
+  color: #fecaca;
+}
+
+.rtt-diff__line--same {
+  color: #9ca3af;
+}
+
+/* Session chips --------------------------------------------- */
+
+.rtt-session-chips {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.rtt-chip {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--rtt-border-soft);
+  background: rgba(15, 23, 42, 0.8);
+  color: var(--rtt-text-muted);
+}
+
+/* Footer ---------------------------------------------------- */
+
+.rtt-shell__footer {
+  padding: 10px 24px 16px;
+  border-top: 1px solid var(--rtt-border-soft);
+  font-size: 11px;
+  color: var(--rtt-text-muted);
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Responsive ------------------------------------------------ */
+
+@media (max-width: 900px) {
+  .rtt-shell__main {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
 
