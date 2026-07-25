@@ -1,1 +1,237 @@
+openapi: 3.1.0
+info:
+  title: RTT/1 Unified API Surface
+  version: 1.0.0-alpha
+  description: >
+    Unified API specification covering all RTT/1 routers:
+    - Client
+    - Client Worker
+    - Worker
+    - Graph Worker
+    - Streaming Worker
+
+servers:
+  - url: local
+    description: Local browser/worker execution
+
+paths:
+
+  # ------------------------------
+  # Client Router
+  # ------------------------------
+  /client/analyze:
+    post:
+      summary: RTT/1 analysis (browser)
+      operationId: clientAnalyze
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Raw analysis output
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnalysisOutput"
+
+  /client/report:
+    post:
+      summary: RTT/1 report (browser)
+      operationId: clientReport
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Full RTT/1 report
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReportOutput"
+
+  /client/meta:
+    get:
+      summary: Client metadata
+      operationId: clientMeta
+      responses:
+        "200":
+          description: Metadata
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MetaOutput"
+
+  # ------------------------------
+  # Worker Router
+  # ------------------------------
+  /worker/analyze:
+    post:
+      summary: RTT/1 analysis (worker)
+      operationId: workerAnalyze
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Raw analysis output
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnalysisOutput"
+
+  /worker/report:
+    post:
+      summary: RTT/1 report (worker)
+      operationId: workerReport
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Full RTT/1 report
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReportOutput"
+
+  /worker/meta:
+    get:
+      summary: Worker metadata
+      operationId: workerMeta
+      responses:
+        "200":
+          description: Metadata
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MetaOutput"
+
+  # ------------------------------
+  # Graph Worker Router
+  # ------------------------------
+  /worker/graph/analyze:
+    post:
+      summary: Graph RTT/1 analysis
+      operationId: graphAnalyze
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GraphInput"
+      responses:
+        "200":
+          description: Graph-shaped analysis output
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GraphAnalysisOutput"
+
+  /worker/graph/report:
+    post:
+      summary: Graph RTT/1 report
+      operationId: graphReport
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GraphInput"
+      responses:
+        "200":
+          description: Graph-shaped report output
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GraphReportOutput"
+
+  /worker/graph/meta:
+    get:
+      summary: Graph worker metadata
+      operationId: graphMeta
+      responses:
+        "200":
+          description: Metadata
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MetaOutput"
+
+  # ------------------------------
+  # Streaming Worker Router
+  # ------------------------------
+  /worker/stream/analyze:
+    post:
+      summary: Chunked RTT/1 analysis
+      operationId: streamAnalyze
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StreamInput"
+      responses:
+        "200":
+          description: Combined streaming output
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StreamOutput"
+
+  /worker/stream/meta:
+    get:
+      summary: Streaming worker metadata
+      operationId: streamMeta
+      responses:
+        "200":
+          description: Metadata
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MetaOutput"
+
+components:
+  schemas:
+
+    # Reuse all schemas from earlier files
+    AnalysisOutput:
+      type: object
+      properties:
+        clarity_surface: { type: ["object", "null"] }
+        drift: { type: ["string", "null"] }
+        coherence: { type: ["number", "null"] }
+        substrate:
+          type: ["object", "null"]
+          properties:
+            summary: { type: ["string", "null"] }
+            signals: { type: "array", items: { type: "string" } }
+            operators: { type: "array", items: { type: "string" } }
+        diagnostics:
+          type: "object"
+
+    ReportOutput:
+      type: object
+
+    MetaOutput:
+      type: object
+
+    GraphInput:
+      type: object
+
+    GraphAnalysisOutput:
+      type: object
+
+    GraphReportOutput:
+      type: object
+
+    StreamInput:
+      type: object
+
+    StreamOutput:
+      type: object
 
