@@ -1,1 +1,116 @@
+openapi: 3.1.0
+info:
+  title: RTT/1 Diagnostic Graph API
+  version: 1.0.0-alpha
+  description: >
+    Graph-aware RTT/1 diagnostic API.
+    Applies diagnostics to each node in a graph.
+
+servers:
+  - url: local
+    description: Local graph execution
+
+paths:
+  /diagnostics-graph:
+    post:
+      summary: Run RTT/1 diagnostics over a graph
+      operationId: diagnosticGraph
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DiagnosticGraphInput"
+      responses:
+        "200":
+          description: RTT/1 diagnostic graph output
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DiagnosticGraphOutput"
+
+components:
+  schemas:
+
+    DiagnosticGraphInput:
+      type: object
+      required: ["nodes", "edges"]
+      properties:
+        nodes:
+          type: array
+          items:
+            $ref: "#/components/schemas/GraphNodeInput"
+        edges:
+          type: array
+          items:
+            $ref: "#/components/schemas/GraphEdgeInput"
+
+    GraphNodeInput:
+      type: object
+      required: ["id"]
+      properties:
+        id:
+          type: string
+        label:
+          type: ["string", "null"]
+        payload:
+          type: object
+          additionalProperties: true
+
+    GraphEdgeInput:
+      type: object
+      required: ["from", "to"]
+      properties:
+        from:
+          type: string
+        to:
+          type: string
+        label:
+          type: ["string", "null"]
+
+    DiagnosticOutputStrict:
+      type: object
+      required: ["issues", "warnings", "stats"]
+      properties:
+        issues:
+          type: array
+          items: { type: "string" }
+        warnings:
+          type: array
+          items: { type: "string" }
+        stats:
+          type: object
+          required: ["timestamp", "length"]
+          properties:
+            timestamp: { type: "number" }
+            length: { type: "number" }
+
+    DiagnosticGraphNodeOutput:
+      type: object
+      required: ["id", "diagnostics"]
+      properties:
+        id:
+          type: string
+        label:
+          type: ["string", "null"]
+        diagnostics:
+          $ref: "#/components/schemas/DiagnosticOutputStrict"
+
+    DiagnosticGraphOutput:
+      type: object
+      required: ["nodes", "edges"]
+      properties:
+        nodes:
+          type: array
+          items:
+            $ref: "#/components/schemas/DiagnosticGraphNodeOutput"
+        edges:
+          type: array
+          items:
+            $ref: "#/components/schemas/GraphEdgeInput"
+
+    ErrorOutput:
+      type: object
+      properties:
+        error: { type: "string" }
 
