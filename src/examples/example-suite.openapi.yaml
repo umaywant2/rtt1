@@ -1,1 +1,91 @@
+openapi: 3.1.0
+info:
+  title: RTT/1 Example Suite API
+  version: 1.0.0-alpha
+  description: >
+    Full RTT/1 example suite API: clarity, graph, report, and bundle endpoints.
+
+paths:
+  /examples/suite:
+    get:
+      summary: Return full RTT/1 example suite
+      operationId: exampleSuite
+      responses:
+        "200":
+          description: Full example suite
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExampleSuite"
+
+  /examples/suite/clarity:
+    get:
+      summary: Return clarity example
+      operationId: exampleSuiteClarity
+      responses:
+        "200":
+          description: Clarity example
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExampleClarity"
+
+  /examples/suite/graph:
+    get:
+      summary: Return graph example
+      operationId: exampleSuiteGraph
+      responses:
+        "200":
+          description: Graph example
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExampleGraph"
+
+  /examples/suite/report:
+    get:
+      summary: Return report example
+      operationId: exampleSuiteReport
+      responses:
+        "200":
+          description: Report example
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExampleReport"
+
+components:
+  schemas:
+
+    ExampleClarity:
+      type: object
+      properties:
+        input: { type: object }
+        clarity_surface: { type: object }
+        clarity_scan: { type: object }
+        diagnostics: { type: object }
+
+    ExampleGraph:
+      type: object
+      properties:
+        nodes: { type: array }
+        edges: { type: array }
+
+    ExampleReport:
+      type: object
+      properties:
+        input: { type: object }
+        clarity_surface: { type: object }
+        clarity_scan: { type: object }
+        diagnostics: { type: object }
+
+    ExampleSuite:
+      type: object
+      properties:
+        clarity:
+          $ref: "#/components/schemas/ExampleClarity"
+        graph:
+          $ref: "#/components/schemas/ExampleGraph"
+        report:
+          $ref: "#/components/schemas/ExampleReport"
 
