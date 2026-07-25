@@ -1,1 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="800" height="500"
+     viewBox="0 0 800 500">
+
+  <!-- Background -->
+  <rect x="0" y="0" width="800" height="500" fill="#0b0b1a"/>
+
+  <!-- Title -->
+  <text x="400" y="40"
+        text-anchor="middle"
+        fill="#ffffff"
+        font-family="Arial"
+        font-size="20">
+    RTT/1 — Structural Map (Topology)
+  </text>
+
+  <!-- Nodes -->
+  <!-- Clarity Surface -->
+  <rect x="320" y="80" width="160" height="50" rx="8"
+        fill="#283593" stroke="#ffffff" stroke-width="1.5"/>
+  <text x="400" y="110"
+        text-anchor="middle"
+        fill="#ffffff"
+        font-family="Arial"
+        font-size="13">
+    clarity_surface
+  </text>
+
+  <!-- Load-Bearing Detection -->
+  <rect x="120" y="190" width="200" height="50" rx="8"
+        fill="#1565c0" stroke="#ffffff" stroke-width="1.5"/>
+  <text x="220" y="220"
+        text-anchor="middle"
+        fill="#ffffff"
+        font-family="Arial"
+        font-size="13">
+    load_bearing_detection
+  </text>
+
+  <!-- Contradiction Scan -->
+  <rect x="480" y="190" width="200" height="50" rx="8"
+        fill="#1565c0" stroke="#ffffff" stroke-width="1.5"/>
+  <text x="580" y="220"
+        text-anchor="middle"
+        fill="#ffffff"
+        font-family="Arial"
+        font-size="13">
+    contradiction_scan
+  </text>
+
+  <!-- Structural Critique -->
+  <rect x="280" y="300" width="240" height="60" rx="8"
+        fill="#2e7d32" stroke="#ffffff" stroke-width="1.5"/>
+  <text x="400" y="330"
+        text-anchor="middle"
+        fill="#ffffff"
+        font-family="Arial"
+        font-size="13">
+    structural_critique
+  </text>
+
+  <!-- Diagnostic Surface -->
+  <rect x="280" y="400" width="240" height="60" rx="8"
+        fill="#c62828" stroke="#ffffff" stroke-width="1.5"/>
+  <text x="400" y="430"
+        text-anchor="middle"
+        fill="#ffffff"
+        font-family="Arial"
+        font-size="13">
+    diagnostic_surface
+  </text>
+
+  <!-- Arrows -->
+  <!-- clarity -> load_bearing -->
+  <line x1="360" y1="130" x2="220" y2="190"
+        stroke="#ffffff" stroke-width="1.5"/>
+  <polygon points="220,190 228,184 228,196"
+           fill="#ffffff"/>
+
+  <!-- clarity -> contradiction -->
+  <line x1="440" y1="130" x2="580" y2="190"
+        stroke="#ffffff" stroke-width="1.5"/>
+  <polygon points="580,190 572,184 572,196"
+           fill="#ffffff"/>
+
+  <!-- clarity -> structural_critique -->
+  <line x1="400" y1="130" x2="400" y2="300"
+        stroke="#ffffff" stroke-width="1.5"/>
+  <polygon points="400,300 394,292 406,292"
+           fill="#ffffff"/>
+
+  <!-- load_bearing -> structural_critique -->
+  <line x1="220" y1="240" x2="320" y2="300"
+        stroke="#ffffff" stroke-width="1.5"/>
+  <polygon points="320,300 312,294 312,306"
+           fill="#ffffff"/>
+
+  <!-- contradiction -> structural_critique -->
+  <line x1="580" y1="240" x2="480" y2="300"
+        stroke="#ffffff" stroke-width="1.5"/>
+  <polygon points="480,300 488,294 488,306"
+           fill="#ffffff"/>
+
+  <!-- structural_critique -> diagnostic_surface -->
+  <line x1="400" y1="360" x2="400" y2="400"
+        stroke="#ffffff" stroke-width="1.5"/>
+  <polygon points="400,400 394,392 406,392"
+           fill="#ffffff"/>
+
+  <!-- Legend -->
+  <text x="40" y="470"
+        fill="#ffffff"
+        font-family="Arial"
+        font-size="11">
+    Flow: clarity_surface → load_bearing_detection / contradiction_scan → structural_critique → diagnostic_surface
+  </text>
+
+</svg>
 
