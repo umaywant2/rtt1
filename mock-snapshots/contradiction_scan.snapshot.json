@@ -1,1 +1,16 @@
+{
+  "contradiction_scan": {
+    "direct": ["mock contradiction"],
+    "implicit": ["mock implicit contradiction"],
+    "load_bearing_conflicts": ["mock anchor conflict"],
+    "propagation": ["mock contradiction propagates"],
+    "regime": ["mock regime conflict"],
+    "geometry": {
+      "type": "linear",
+      "origin": "mock anchor",
+      "spread": ["mock dependency"]
+    },
+    "questions": ["Is mock contradiction structural?"]
+  }
+}
 
