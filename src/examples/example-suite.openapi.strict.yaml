@@ -1,1 +1,95 @@
+openapi: 3.1.0
+info:
+  title: RTT/1 Example Suite API (Strict)
+  version: 1.0.0-alpha
+  description: >
+    Strict RTT/1 example suite endpoints for clarity, graph, and report examples.
+
+paths:
+  /examples/suite:
+    get:
+      summary: Return strict RTT/1 example suite
+      operationId: exampleSuiteStrict
+      responses:
+        "200":
+          description: Strict example suite
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExampleSuiteStrict"
+
+  /examples/suite/clarity:
+    get:
+      summary: Return strict clarity example
+      operationId: exampleSuiteClarityStrict
+      responses:
+        "200":
+          description: Strict clarity example
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExampleClarityStrict"
+
+  /examples/suite/graph:
+    get:
+      summary: Return strict graph example
+      operationId: exampleSuiteGraphStrict
+      responses:
+        "200":
+          description: Strict graph example
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExampleGraphStrict"
+
+  /examples/suite/report:
+    get:
+      summary: Return strict report example
+      operationId: exampleSuiteReportStrict
+      responses:
+        "200":
+          description: Strict report example
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExampleReportStrict"
+
+components:
+  schemas:
+
+    ExampleClarityStrict:
+      type: object
+      required: ["input","clarity_surface","clarity_scan","diagnostics"]
+      properties:
+        input: { type: object }
+        clarity_surface: { type: object }
+        clarity_scan: { type: object }
+        diagnostics: { type: object }
+
+    ExampleGraphStrict:
+      type: object
+      required: ["nodes","edges"]
+      properties:
+        nodes: { type: array }
+        edges: { type: array }
+
+    ExampleReportStrict:
+      type: object
+      required: ["input","clarity_surface","clarity_scan","diagnostics"]
+      properties:
+        input: { type: object }
+        clarity_surface: { type: object }
+        clarity_scan: { type: object }
+        diagnostics: { type: object }
+
+    ExampleSuiteStrict:
+      type: object
+      required: ["clarity","graph","report"]
+      properties:
+        clarity:
+          $ref: "#/components/schemas/ExampleClarityStrict"
+        graph:
+          $ref: "#/components/schemas/ExampleGraphStrict"
+        report:
+          $ref: "#/components/schemas/ExampleReportStrict"
 
