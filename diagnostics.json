@@ -1,1 +1,143 @@
+{
+  "engine": "rtt1",
+  "version": "1.0.0",
+  "session": {
+    "rtt": 1,
+    "coherence": "declared",
+    "drift": "bounded",
+    "paradox": "structural"
+  },
+
+  "summary": {
+    "status": "healthy",
+    "coverage": 100,
+    "drift": "bounded",
+    "coherence": "declared",
+    "notes": [
+      "All RTT/1 mock snapshots are structurally complete.",
+      "No missing canonical keys detected.",
+      "No malformed arrays or objects detected.",
+      "Full pipeline snapshot matches layer topology."
+    ]
+  },
+
+  "layers": {
+    "clarity_surface": {
+      "file": "mock-snapshots/clarity_surface.snapshot.json",
+      "status": "healthy",
+      "checks": {
+        "keys_complete": true,
+        "arrays_valid": true,
+        "vocabulary_present": true,
+        "relationships_present": true
+      },
+      "notes": [
+        "All nine canonical clarity keys present.",
+        "Surface geometry is stable and deterministic."
+      ]
+    },
+    "load_bearing": {
+      "file": "mock-snapshots/load_bearing.snapshot.json",
+      "status": "healthy",
+      "checks": {
+        "anchors_coherent": true,
+        "collapse_map_valid": true,
+        "relationships_consistent": true
+      },
+      "notes": [
+        "Candidates, confirmed anchors, and collapse maps present.",
+        "No orphan anchors detected."
+      ]
+    },
+    "contradiction_scan": {
+      "file": "mock-snapshots/contradiction_scan.snapshot.json",
+      "status": "healthy",
+      "checks": {
+        "direct_contradictions_present": true,
+        "implicit_contradictions_present": true,
+        "load_bearing_conflicts_present": true,
+        "geometry_complete": true
+      },
+      "notes": [
+        "Propagation and regime geometry present.",
+        "Geometry object contains required fields: type, origin, spread."
+      ]
+    },
+    "structural_critique": {
+      "file": "mock-snapshots/structural_critique.snapshot.json",
+      "status": "healthy",
+      "checks": {
+        "presence_absence_present": true,
+        "tension_present": true,
+        "stability_present": true,
+        "shape_geometry_valid": true,
+        "synthesis_present": true
+      },
+      "notes": [
+        "Shape geometry aligns with load-bearing anchors.",
+        "No contradictions with contradiction scan geometry."
+      ]
+    },
+    "diagnostic_surface": {
+      "file": "mock-snapshots/diagnostic_surface.snapshot.json",
+      "status": "healthy",
+      "checks": {
+        "summary_present": true
+      },
+      "notes": [
+        "Diagnostic summary present and structurally valid."
+      ]
+    },
+    "full_pipeline": {
+      "file": "mock-snapshots/full_pipeline.snapshot.json",
+      "status": "healthy",
+      "checks": {
+        "engine_identity_present": true,
+        "session_metadata_present": true,
+        "all_layers_present": true,
+        "topology_aligned": true
+      },
+      "notes": [
+        "Pipeline snapshot is structurally faithful to RTT/1.",
+        "No drift between pipeline and layer snapshots."
+      ]
+    }
+  },
+
+  "cross_layer_consistency": {
+    "anchors": {
+      "no_orphan_anchors": true,
+      "notes": [
+        "All anchors referenced in contradiction_scan exist in load_bearing."
+      ]
+    },
+    "collapse_map": {
+      "keys_reference_valid_clarity_elements": true,
+      "notes": [
+        "All collapse map keys correspond to clarity_surface elements."
+      ]
+    },
+    "contradictions": {
+      "no_contradictions_on_missing_anchors": true,
+      "notes": [
+        "No contradiction paths reference non-existent anchors."
+      ]
+    },
+    "pipeline": {
+      "layers_match_pipeline_structure": true,
+      "notes": [
+        "Canonical keys match between layer snapshots and full_pipeline snapshot."
+      ]
+    }
+  },
+
+  "metadata": {
+    "generated_at": "rtt=1",
+    "generator": "RTT/1 diagnostic surface (synthetic)",
+    "notes": [
+      "Report is synthetic and evaluates structure only.",
+      "Safe for CI, development, and documentation use."
+    ]
+  }
+}
 
