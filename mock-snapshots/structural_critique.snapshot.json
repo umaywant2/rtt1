@@ -1,1 +1,16 @@
+{
+  "structural_critique": {
+    "presence": ["mock anchor"],
+    "absence": ["mock missing element"],
+    "tension": ["mock tension"],
+    "stability": "semi-stable",
+    "shape": {
+      "type": "linear",
+      "anchors": ["mock anchor"],
+      "dependencies": ["mock dependency"]
+    },
+    "synthesis": "Mock synthesis describing structural behavior.",
+    "questions": ["What stabilizes mock tension?"]
+  }
+}
 
