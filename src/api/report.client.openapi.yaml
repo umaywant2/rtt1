@@ -1,1 +1,115 @@
+openapi: 3.1.0
+info:
+  title: RTT/1 Client Report API
+  version: 1.0.0-alpha
+  description: >
+    Browser-optimized RTT/1 report generator API surface.
+    Wraps analyzeClient() and produces canonical RTT/1 reports.
+
+servers:
+  - url: local
+    description: Browser execution (no worker)
+
+paths:
+  /report-client:
+    post:
+      summary: Generate RTT/1 report in browser context
+      operationId: reportClient
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReportClientInput"
+      responses:
+        "200":
+          description: RTT/1 client report output
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReportClientOutput"
+
+components:
+  schemas:
+
+    ReportClientInput:
+      type: object
+      description: Input payload for RTT/1 client report generation.
+      additionalProperties: true
+
+    ReportClientOutput:
+      type: object
+      required: ["meta", "substrate", "diagnostics", "payload"]
+      properties:
+        meta:
+          type: object
+          required: ["module", "timestamp", "rtt", "coherence", "drift"]
+          properties:
+            module: { type: "string", const: "Analyzer.Report.Client" }
+            timestamp: { type: "number" }
+            rtt: { type: "number" }
+            coherence: { type: ["number", "null"] }
+            drift: { type: ["string", "null"] }
+
+        substrate:
+          type: object
+          required: ["summary", "signals", "operators"]
+          properties:
+            summary: { type: ["string", "null"] }
+            signals:
+              type: array
+              items: { type: "string" }
+            operators:
+              type: array
+              items: { type: "string" }
+
+        diagnostics:
+          type: object
+          required: ["issues", "warnings", "stats"]
+          properties:
+            issues:
+              type: array
+              items: { type: "string" }
+            warnings:
+              type: array
+              items: { type: "string" }
+            stats:
+              type: object
+              properties:
+                timestamp: { type: "number" }
+                length: { type: "number" }
+
+        payload:
+          type: object
+          required: ["input", "analysis"]
+          properties:
+            input: { type: "object" }
+            analysis:
+              $ref: "#/components/schemas/AnalysisOutput"
+
+    AnalysisOutput:
+      type: object
+      description: RTT/1 analyzer output.
+      properties:
+        module: { type: "string" }
+        rtt: { type: "number" }
+        coherence: { type: ["number", "null"] }
+        drift: { type: ["string", "null"] }
+        substrate:
+          type: ["object", "null"]
+          properties:
+            summary: { type: ["string", "null"] }
+            signals:
+              type: array
+              items: { type: "string" }
+            operators:
+              type: array
+              items: { type: "string" }
+        diagnostics:
+          type: object
+
+    ErrorOutput:
+      type: object
+      properties:
+        error: { type: "string" }
 
