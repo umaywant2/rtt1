@@ -1,1 +1,76 @@
+{
+  "graph": {
+    "nodes": [
+      {
+        "id": "n1",
+        "label": "Subsystem A",
+        "payload": {
+          "text": "Subsystem A exhibits bounded drift."
+        }
+      },
+      {
+        "id": "n2",
+        "label": "Subsystem B",
+        "payload": {
+          "text": "Subsystem B maintains structural stability."
+        }
+      }
+    ],
+    "edges": [
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "dependency"
+      }
+    ]
+  },
+
+  "clarity": {
+    "nodes": [
+      {
+        "id": "n1",
+        "clarity_surface": {
+          "summary": "Subsystem A expresses a bounded drift condition.",
+          "signals": ["Subsystem", "bounded", "drift"],
+          "operators": ["claim", "structure"],
+          "coherence": "declared",
+          "drift": "bounded",
+          "paradox": "structural"
+        },
+        "clarity_scan": {
+          "anchors": ["Subsystem", "drift"],
+          "tensions": [],
+          "gaps": [],
+          "load_bearing": ["claim", "structure"],
+          "stability": "stable"
+        }
+      },
+      {
+        "id": "n2",
+        "clarity_surface": {
+          "summary": "Subsystem B expresses structural stability.",
+          "signals": ["Subsystem", "structural", "stability"],
+          "operators": ["claim", "structure"],
+          "coherence": "declared",
+          "drift": "bounded",
+          "paradox": "structural"
+        },
+        "clarity_scan": {
+          "anchors": ["structural", "stability"],
+          "tensions": [],
+          "gaps": [],
+          "load_bearing": ["claim", "structure"],
+          "stability": "stable"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "dependency"
+      }
+    ]
+  }
+}
 
