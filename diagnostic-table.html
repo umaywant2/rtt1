@@ -1,1 +1,156 @@
+<!-- ========================================================= -->
+<!-- RTT/1 — Structural Diagnostic Table                        -->
+<!-- Engine: RTT/1 Structural                                   -->
+<!-- Mode: S‑mode (diagnostic surface)                          -->
+<!-- Session: rtt=1 | coherence=declared | drift=bounded        -->
+<!-- ========================================================= -->
+
+<section id="rtt1-diagnostic-table"
+         data-rtt="1"
+         data-coherence="declared"
+         data-drift="bounded"
+         data-paradox="structural">
+
+  <h2>RTT/1 — Diagnostic Table</h2>
+  <p class="intro">
+    This table presents the RTT/1 diagnostic surface: clarity → load‑bearing →
+    contradictions → structural critique. It is fully parsable and designed for
+    downstream engines, AIs, and human analysts.
+  </p>
+
+  <table class="diagnostic">
+    <thead>
+      <tr>
+        <th>Layer</th>
+        <th>Element</th>
+        <th>Findings</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      <!-- Clarity Surface -->
+      <tr class="layer-clarity">
+        <td>Clarity Surface</td>
+        <td>Summary</td>
+        <td data-field="clarity.summary">...</td>
+        <td>Neutral description of visible intent.</td>
+      </tr>
+
+      <tr class="layer-clarity">
+        <td>Clarity Surface</td>
+        <td>Stated Elements</td>
+        <td data-field="clarity.stated_elements">...</td>
+        <td>Only explicit statements; no interpretation.</td>
+      </tr>
+
+      <tr class="layer-clarity">
+        <td>Clarity Surface</td>
+        <td>Surface Claims</td>
+        <td data-field="clarity.surface_claims">...</td>
+        <td>Directly visible claims.</td>
+      </tr>
+
+      <tr class="layer-clarity">
+        <td>Clarity Surface</td>
+        <td>Surface Structure</td>
+        <td data-field="clarity.visible_structure">...</td>
+        <td>Shape of the input (form, ordering, anchors).</td>
+      </tr>
+
+      <!-- Load-Bearing Detection -->
+      <tr class="layer-structural">
+        <td>Load‑Bearing</td>
+        <td>Candidates</td>
+        <td data-field="load_bearing.candidates">...</td>
+        <td>Potential load‑bearing elements (surface only).</td>
+      </tr>
+
+      <tr class="layer-structural">
+        <td>Load‑Bearing</td>
+        <td>Confirmed</td>
+        <td data-field="load_bearing.confirmed">...</td>
+        <td>Elements required for structural stability.</td>
+      </tr>
+
+      <!-- Contradiction Scan -->
+      <tr class="layer-structural">
+        <td>Contradictions</td>
+        <td>Direct</td>
+        <td data-field="contradictions.direct">...</td>
+        <td>Explicit contradictions visible on the surface.</td>
+      </tr>
+
+      <tr class="layer-structural">
+        <td>Contradictions</td>
+        <td>Implicit</td>
+        <td data-field="contradictions.implict">...</td>
+        <td>Contradictions inferred from structural relations.</td>
+      </tr>
+
+      <!-- Structural Critique -->
+      <tr class="layer-structural">
+        <td>Structural Critique</td>
+        <td>Presence</td>
+        <td data-field="critique.presence">...</td>
+        <td>What the structure explicitly supports.</td>
+      </tr>
+
+      <tr class="layer-structural">
+        <td>Structural Critique</td>
+        <td>Absence</td>
+        <td data-field="critique.absence">...</td>
+        <td>Missing but required structural elements.</td>
+      </tr>
+
+      <tr class="layer-structural">
+        <td>Structural Critique</td>
+        <td>Tension</td>
+        <td data-field="critique.tension">...</td>
+        <td>Misalignments between layers.</td>
+      </tr>
+
+      <!-- Diagnostic Summary -->
+      <tr class="layer-diagnostics">
+        <td>Diagnostic</td>
+        <td>Summary</td>
+        <td data-field="diagnostic.summary">...</td>
+        <td>High‑level diagnostic overview.</td>
+      </tr>
+
+    </tbody>
+  </table>
+
+  <!-- JSON Output Block -->
+  <pre class="diagnostic-json">
+{
+  "diagnostic_table": {
+    "clarity": {
+      "summary": "...",
+      "stated_elements": ["..."],
+      "surface_claims": ["..."],
+      "visible_structure": ["..."]
+    },
+    "load_bearing": {
+      "candidates": ["..."],
+      "confirmed": ["..."]
+    },
+    "contradictions": {
+      "direct": ["..."],
+      "implicit": ["..."]
+    },
+    "critique": {
+      "presence": ["..."],
+      "absence": ["..."],
+      "tension": ["..."]
+    },
+    "diagnostic": {
+      "summary": "..."
+    }
+  }
+}
+  </pre>
+
+</section>
 
