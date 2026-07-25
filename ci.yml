@@ -1,1 +1,159 @@
+name: RTT1 CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  # ------------------------------------------------------------
+  # 1. Setup
+  # ------------------------------------------------------------
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+  # ------------------------------------------------------------
+  # 2. Linting
+  # ------------------------------------------------------------
+  lint:
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run linter
+        run: npm run lint
+
+  # ------------------------------------------------------------
+  # 3. Schema Validation
+  # ------------------------------------------------------------
+  validate:
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Validate module.json manifests
+        run: |
+          for f in $(find . -name "module.json"); do
+            echo "Validating $f"
+            npx ajv validate -s schemas/module.schema.json -d "$f"
+          done
+
+      - name: Validate engine.json
+        run: |
+          npx ajv validate -s schemas/engine.schema.json -d engine.json
+
+  # ------------------------------------------------------------
+  # 4. Unit Tests
+  # ------------------------------------------------------------
+  unit:
+    runs-on: ubuntu-latest
+    needs: validate
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run unit tests
+        run: npm test
+
+  # ------------------------------------------------------------
+  # 5. RTT/1 Pipeline Tests
+  # ------------------------------------------------------------
+  pipeline:
+    runs-on: ubuntu-latest
+    needs: unit
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run RTT/1 pipeline tests
+        run: node rtt1.test.js
+
+  # ------------------------------------------------------------
+  # 6. Mock Mode Snapshot Tests
+  # ------------------------------------------------------------
+  mock:
+    runs-on: ubuntu-latest
+    needs: pipeline
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run mock snapshot tests
+        run: node snapshots/run.js
+
+  # ------------------------------------------------------------
+  # 7. Build (Optional)
+  # ------------------------------------------------------------
+  build:
+    runs-on: ubuntu-latest
+    needs: mock
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build front-end
+        run: npm run build
+
+  # ------------------------------------------------------------
+  # 8. Deploy (Optional)
+  # ------------------------------------------------------------
+  # deploy:
+  #   runs-on: ubuntu-latest
+  #   needs: build
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - name: Deploy to Cloudflare Pages
+  #       uses: cloudflare/pages-action@v1
+  #       with:
+  #         apiToken: ${{ secrets.CF_API_TOKEN }}
+  #         accountId: ${{ secrets.CF_ACCOUNT_ID }}
+  #         projectName: rtt1
+  #         directory: dist
 
