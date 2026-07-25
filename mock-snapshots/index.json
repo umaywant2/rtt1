@@ -1,1 +1,60 @@
+{
+  "engine": "rtt1",
+  "version": "1.0.0",
+  "session": {
+    "rtt": 1,
+    "coherence": "declared",
+    "drift": "bounded",
+    "paradox": "structural"
+  },
+
+  "snapshots": [
+    {
+      "name": "clarity_surface",
+      "file": "clarity_surface.snapshot.json",
+      "layer": "clarity_surface",
+      "description": "Mock clarity surface snapshot for RTT/1 CI testing."
+    },
+    {
+      "name": "load_bearing",
+      "file": "load_bearing.snapshot.json",
+      "layer": "load_bearing",
+      "description": "Mock load-bearing snapshot for RTT/1 CI testing."
+    },
+    {
+      "name": "contradiction_scan",
+      "file": "contradiction_scan.snapshot.json",
+      "layer": "contradiction_scan",
+      "description": "Mock contradiction scan snapshot for RTT/1 CI testing."
+    },
+    {
+      "name": "structural_critique",
+      "file": "structural_critique.snapshot.json",
+      "layer": "structural_critique",
+      "description": "Mock structural critique snapshot for RTT/1 CI testing."
+    },
+    {
+      "name": "diagnostic_surface",
+      "file": "diagnostic_surface.snapshot.json",
+      "layer": "diagnostic_surface",
+      "description": "Mock diagnostic surface snapshot for RTT/1 CI testing."
+    },
+    {
+      "name": "full_pipeline",
+      "file": "full_pipeline.snapshot.json",
+      "layer": "pipeline",
+      "description": "Full RTT/1 pipeline snapshot including all layers."
+    }
+  ],
+
+  "metadata": {
+    "count": 6,
+    "coverage": "complete",
+    "notes": [
+      "All RTT/1 layers represented.",
+      "Snapshots are deterministic and CI-safe.",
+      "Manifest aligns with snapshots/run.js."
+    ]
+  }
+}
 
