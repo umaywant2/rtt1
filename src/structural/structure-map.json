@@ -1,1 +1,58 @@
+{
+  "engine": "rtt1",
+  "version": "1.0.0",
+  "session": {
+    "rtt": 1,
+    "coherence": "declared",
+    "drift": "bounded",
+    "paradox": "structural"
+  },
 
+  "structure_map": {
+    "layers": [
+      {
+        "id": "contradiction_scan",
+        "type": "structural",
+        "inputs": ["clarity_surface"],
+        "outputs": ["structural/contradiction_scan"],
+        "anchors": ["contradiction_geometry"]
+      },
+      {
+        "id": "load_bearing_detection",
+        "type": "structural",
+        "inputs": ["clarity_surface"],
+        "outputs": ["structural/load_bearing_map"],
+        "anchors": ["load_bearing_candidates"]
+      },
+      {
+        "id": "structural_critique",
+        "type": "structural",
+        "inputs": [
+          "clarity_surface",
+          "structural/load_bearing_map",
+          "structural/contradiction_scan"
+        ],
+        "outputs": ["structural/critique"],
+        "anchors": ["presence", "absence", "tension"]
+      }
+    ],
+
+    "pipeline": [
+      "contradiction_scan",
+      "load_bearing_detection",
+      "structural_critique"
+    ],
+
+    "geometry": {
+      "shape": "layered",
+      "flow": "linear",
+      "anchors": [
+        "contradiction_geometry",
+        "load_bearing_candidates",
+        "presence",
+        "absence",
+        "tension"
+      ]
+    }
+  }
+}
