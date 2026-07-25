@@ -1,1 +1,13 @@
+{
+  "load_bearing": {
+    "candidates": ["mock anchor"],
+    "confirmed": ["mock anchor"],
+    "anchors": ["mock anchor"],
+    "collapse_map": {
+      "mock anchor": ["mock dependency"]
+    },
+    "relationships": ["mock anchor supports mock dependency"],
+    "questions": ["How does mock anchor propagate?"]
+  }
+}
 
