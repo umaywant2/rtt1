@@ -1,1 +1,114 @@
+openapi: 3.1.0
+info:
+  title: RTT/1 Report API
+  version: 1.0.0-alpha
+  description: >
+    Canonical RTT/1 report generator API surface. Wraps analyze() and
+    produces full RTT/1 report objects.
 
+servers:
+  - url: local
+    description: Local execution (browser or worker)
+
+paths:
+  /report:
+    post:
+      summary: Generate RTT/1 report
+      operationId: report
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReportInput"
+      responses:
+        "200":
+          description: RTT/1 report output
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReportOutput"
+
+components:
+  schemas:
+
+    ReportInput:
+      type: object
+      description: Input payload for RTT/1 report generation.
+      additionalProperties: true
+
+    ReportOutput:
+      type: object
+      required: ["meta", "substrate", "diagnostics", "payload"]
+      properties:
+        meta:
+          type: object
+          required: ["module", "timestamp", "rtt", "coherence", "drift"]
+          properties:
+            module: { type: "string" }
+            timestamp: { type: "number" }
+            rtt: { type: "number" }
+            coherence: { type: ["number", "null"] }
+            drift: { type: ["string", "null"] }
+
+        substrate:
+          type: object
+          required: ["summary", "signals", "operators"]
+          properties:
+            summary: { type: ["string", "null"] }
+            signals:
+              type: array
+              items: { type: "string" }
+            operators:
+              type: array
+              items: { type: "string" }
+
+        diagnostics:
+          type: object
+          required: ["issues", "warnings", "stats"]
+          properties:
+            issues:
+              type: array
+              items: { type: "string" }
+            warnings:
+              type: array
+              items: { type: "string" }
+            stats:
+              type: object
+              properties:
+                timestamp: { type: "number" }
+                length: { type: "number" }
+
+        payload:
+          type: object
+          required: ["input", "analysis"]
+          properties:
+            input: { type: "object" }
+            analysis:
+              $ref: "#/components/schemas/AnalysisOutput"
+
+    AnalysisOutput:
+      type: object
+      description: RTT/1 analyzer output.
+      properties:
+        module: { type: "string" }
+        rtt: { type: "number" }
+        coherence: { type: ["number", "null"] }
+        drift: { type: ["string", "null"] }
+        substrate:
+          type: ["object", "null"]
+          properties:
+            summary: { type: ["string", "null"] }
+            signals:
+              type: array
+              items: { type: "string" }
+            operators:
+              type: array
+              items: { type: "string" }
+        diagnostics:
+          type: object
+
+    ErrorOutput:
+      type: object
+      properties:
+        error: { type: "string" }
