@@ -1,98 +1,39 @@
-{
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "RTT/1 Report Schema",
-  "description": "Canonical RTT/1 report object produced by report.js and report.worker.js.",
-  "type": "object",
+/**
+ * ------------------------------------------------------------
+ * RTT/1 — Browser Report Generator (Annotated)
+ * Module: Analyzer.Report.Client
+ * Version: 1.0.0-alpha
+ * Coherence: Declared
+ * Purpose:
+ *   Generate RTT/1 reports in browser environments.
+ *   Wraps analyzeClient() or analyze() and produces canonical
+ *   RTT/1 report objects for UI pipelines.
+ * ------------------------------------------------------------
+ */
 
-  "properties": {
-    "meta": {
-      "type": "object",
-      "required": ["module", "timestamp", "rtt", "coherence", "drift"],
-      "properties": {
-        "module": { "type": "string" },
-        "timestamp": { "type": "number" },
-        "rtt": { "type": "number" },
-        "coherence": { "type": ["number", "null"] },
-        "drift": { "type": ["string", "null"] }
-      }
+import { analyzeClient } from "./analyze.client.js";
+
+/**
+ * Build a full RTT/1 report using the browser analyzer.
+ */
+export function buildClientReport(input = {}) {
+  const analysis = analyzeClient(input);
+
+  return {
+    meta: {
+      module: "Analyzer.Report.Client",
+      timestamp: Date.now(),
+      rtt: 1,
+      coherence: analysis.coherence,
+      drift: analysis.drift
     },
 
-    "substrate": {
-      "type": "object",
-      "required": ["summary", "signals", "operators"],
-      "properties": {
-        "summary": { "type": ["string", "null"] },
-        "signals": {
-          "type": "array",
-          "items": { "type": "string" }
-        },
-        "operators": {
-          "type": "array",
-          "items": { "type": "string" }
-        }
-      }
-    },
+    substrate: analysis.substrate,
+    diagnostics: analysis.diagnostics,
 
-    "diagnostics": {
-      "type": "object",
-      "required": ["issues", "warnings", "stats"],
-      "properties": {
-        "issues": {
-          "type": "array",
-          "items": { "type": "string" }
-        },
-        "warnings": {
-          "type": "array",
-          "items": { "type": "string" }
-        },
-        "stats": {
-          "type": "object",
-          "properties": {
-            "timestamp": { "type": "number" },
-            "length": { "type": "number" }
-          }
-        }
-      }
-    },
-
-    "payload": {
-      "type": "object",
-      "required": ["input", "analysis"],
-      "properties": {
-        "input": { "type": "object" },
-        "analysis": { "$ref": "#/definitions/AnalysisOutput" }
-      }
+    payload: {
+      input,
+      analysis
     }
-  },
-
-  "required": ["meta", "substrate", "diagnostics", "payload"],
-
-  "definitions": {
-    "AnalysisOutput": {
-      "type": "object",
-      "properties": {
-        "module": { "type": "string" },
-        "rtt": { "type": "number" },
-        "coherence": { "type": ["number", "null"] },
-        "drift": { "type": ["string", "null"] },
-        "substrate": {
-          "type": ["object", "null"],
-          "properties": {
-            "summary": { "type": ["string", "null"] },
-            "signals": { "type": "array", "items": { "type": "string" } },
-            "operators": { "type": "array", "items": { "type": "string" } }
-          }
-        },
-        "diagnostics": {
-          "type": "object",
-          "properties": {
-            "issues": { "type": "array", "items": { "type": "string" } },
-            "warnings": { "type": "array", "items": { "type": "string" } },
-            "stats": { "type": "object" }
-          }
-        }
-      }
-    }
-  }
+  };
 }
-
