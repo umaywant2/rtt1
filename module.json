@@ -1,1 +1,166 @@
+{
+  "$schema": "https://schema.triadicframeworks.org/module.json",
+  "id": "rtt/1",
+  "name": "RTT/1 Structural Engine",
+  "version": "1.0.0",
+  "status": "canonical",
+  "kind": "engine",
+  "tier": "substrate",
+  "family": "rtt",
+  "engine": {
+    "id": "rtt1",
+    "mode": "structural",
+    "coherence": "declared",
+    "drift": "bounded",
+    "paradox": "structural"
+  },
+
+  "session": {
+    "context": "rtt=1 | coherence=declared | drift=bounded | paradox=structural",
+    "capture": "gradient/g_Capture.md",
+    "inputs": [
+      "text/markdown",
+      "text/plain"
+    ],
+    "outputs": [
+      "clarity/surface",
+      "structural/critique",
+      "diagnostics/table"
+    ]
+  },
+
+  "roles": [
+    {
+      "id": "clarity_surface",
+      "name": "Clarity Surface",
+      "kind": "analyzer",
+      "layer": "clarity",
+      "description": "Expose the visible surface of the argument, narrative, or specification.",
+      "outputs": [
+        "clarity/surface"
+      ]
+    },
+    {
+      "id": "structural_critique",
+      "name": "Structural Critique",
+      "kind": "analyzer",
+      "layer": "structural",
+      "description": "Evaluate structural integrity, load-bearing elements, and contradiction patterns.",
+      "outputs": [
+        "structural/critique",
+        "structural/load_bearing_map",
+        "structural/contradiction_scan"
+      ]
+    },
+    {
+      "id": "diagnostic_surface",
+      "name": "Diagnostic Surface",
+      "kind": "analyzer",
+      "layer": "diagnostics",
+      "description": "Render a parsable diagnostic table over clarity and structural findings.",
+      "outputs": [
+        "diagnostics/table"
+      ]
+    }
+  ],
+
+  "analyzers": [
+    {
+      "id": "clarity_surface",
+      "layer": "clarity",
+      "input": "session:text",
+      "output": "clarity/surface",
+      "grammar": "S-mode clarity surface",
+      "constraints": {
+        "drift": "bounded",
+        "coherence": "declared"
+      }
+    },
+    {
+      "id": "load_bearing_detection",
+      "layer": "structural",
+      "input": "clarity/surface",
+      "output": "structural/load_bearing_map",
+      "grammar": "S-mode load-bearing detection",
+      "constraints": {
+        "paradox": "structural"
+      }
+    },
+    {
+      "id": "contradiction_scan",
+      "layer": "structural",
+      "input": "clarity/surface",
+      "output": "structural/contradiction_scan",
+      "grammar": "S-mode contradiction scan",
+      "constraints": {
+        "drift": "bounded"
+      }
+    },
+    {
+      "id": "structural_critique",
+      "layer": "structural",
+      "input": [
+        "clarity/surface",
+        "structural/load_bearing_map",
+        "structural/contradiction_scan"
+      ],
+      "output": "structural/critique",
+      "grammar": "S-mode structural critique",
+      "constraints": {
+        "coherence": "declared",
+        "paradox": "structural"
+      }
+    },
+    {
+      "id": "diagnostic_surface",
+      "layer": "diagnostics",
+      "input": [
+        "clarity/surface",
+        "structural/critique",
+        "structural/load_bearing_map",
+        "structural/contradiction_scan"
+      ],
+      "output": "diagnostics/table",
+      "grammar": "S-mode diagnostic table",
+      "constraints": {
+        "drift": "bounded"
+      }
+    }
+  ],
+
+  "routes": [
+    {
+      "id": "default",
+      "description": "RTT/1 structural engine pipeline",
+      "steps": [
+        "clarity_surface",
+        "load_bearing_detection",
+        "contradiction_scan",
+        "structural_critique",
+        "diagnostic_surface"
+      ]
+    }
+  ],
+
+  "io": {
+    "entry": "session:text",
+    "primary_outputs": [
+      "clarity/surface",
+      "structural/critique",
+      "diagnostics/table"
+    ]
+  },
+
+  "metadata": {
+    "source": "https://github.com/umaywant2/rtt1",
+    "capture": "https://raw.githubusercontent.com/umaywant2/gradient/refs/heads/main/g_Capture.md",
+    "tags": [
+      "rtt",
+      "engine",
+      "structural",
+      "clarity",
+      "diagnostics"
+    ]
+  }
+}
 
