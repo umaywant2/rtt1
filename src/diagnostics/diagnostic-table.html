@@ -1,1 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>RTT/1 Diagnostic Table</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #ccc; padding: 8px; }
+    th { background: #f0f0f0; }
+  </style>
+</head>
+<body>
+
+<h1>RTT/1 Diagnostic Table</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>issues</td>
+      <td>List of clarity-breaking or analysis-breaking conditions.</td>
+    </tr>
+    <tr>
+      <td>warnings</td>
+      <td>List of clarity-weakening or stability-reducing conditions.</td>
+    </tr>
+    <tr>
+      <td>stats.timestamp</td>
+      <td>Unix timestamp of diagnostic generation.</td>
+    </tr>
+    <tr>
+      <td>stats.length</td>
+      <td>Length of the input payload (text length if applicable).</td>
+    </tr>
+  </tbody>
+</table>
+
+</body>
+</html>
 
