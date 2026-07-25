@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "RTT/1 Client Report Schema",
-  "description": "Canonical RTT/1 report object produced by report.client.js.",
+  "title": "RTT/1 Client Report Schema (Strict)",
+  "description": "Strict canonical RTT/1 report object produced by report.client.js.",
   "type": "object",
 
   "properties": {
@@ -22,14 +22,8 @@
       "required": ["summary", "signals", "operators"],
       "properties": {
         "summary": { "type": ["string", "null"] },
-        "signals": {
-          "type": "array",
-          "items": { "type": "string" }
-        },
-        "operators": {
-          "type": "array",
-          "items": { "type": "string" }
-        }
+        "signals": { "type": "array", "items": { "type": "string" } },
+        "operators": { "type": "array", "items": { "type": "string" } }
       }
     },
 
@@ -37,16 +31,11 @@
       "type": "object",
       "required": ["issues", "warnings", "stats"],
       "properties": {
-        "issues": {
-          "type": "array",
-          "items": { "type": "string" }
-        },
-        "warnings": {
-          "type": "array",
-          "items": { "type": "string" }
-        },
+        "issues": { "type": "array", "items": { "type": "string" } },
+        "warnings": { "type": "array", "items": { "type": "string" } },
         "stats": {
           "type": "object",
+          "required": ["timestamp", "length"],
           "properties": {
             "timestamp": { "type": "number" },
             "length": { "type": "number" }
@@ -70,6 +59,7 @@
   "definitions": {
     "AnalysisOutput": {
       "type": "object",
+      "required": ["module", "rtt", "substrate", "diagnostics"],
       "properties": {
         "module": { "type": "string" },
         "rtt": { "type": "number" },
@@ -95,4 +85,3 @@
     }
   }
 }
-
