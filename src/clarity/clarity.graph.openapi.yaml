@@ -1,0 +1,163 @@
+openapi: 3.1.0
+info:
+  title: RTT/1 Clarity Graph API (Strict)
+  version: 1.0.0-alpha
+  description: >
+    Strict RTT/1 graph-aware clarity API.
+    Accepts a graph (nodes + edges) and returns per-node clarity-surface,
+    clarity-scan, and diagnostics.
+
+servers:
+  - url: local
+    description: Local graph execution (worker or browser)
+
+paths:
+  /clarity-graph:
+    post:
+      summary: Run RTT/1 clarity over a graph
+      operationId: clarityGraphStrict
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ClarityGraphInput"
+      responses:
+        "200":
+          description: RTT/1 clarity graph output
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClarityGraphOutput"
+        "400":
+          description: Invalid graph payload
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorOutput"
+
+components:
+  schemas:
+
+    ClarityGraphInput:
+      type: object
+      required: ["nodes", "edges"]
+      properties:
+        nodes:
+          type: array
+          minItems: 0
+          items:
+            $ref: "#/components/schemas/GraphNodeInput"
+        edges:
+          type: array
+          minItems: 0
+          items:
+            $ref: "#/components/schemas/GraphEdgeInput"
+
+    GraphNodeInput:
+      type: object
+      required: ["id"]
+      properties:
+        id:
+          type: string
+        label:
+          type: ["string", "null"]
+        payload:
+          type: object
+          description: Arbitrary RTT/1 input payload for this node.
+          additionalProperties: true
+
+    GraphEdgeInput:
+      type: object
+      required: ["from", "to"]
+      properties:
+        from:
+          type: string
+        to:
+          type: string
+        label:
+          type: ["string", "null"]
+
+    ClaritySurfaceStrict:
+      type: object
+      required: ["summary", "signals", "operators", "coherence", "drift", "paradox"]
+      properties:
+        summary: { type: ["string", "null"] }
+        signals:
+          type: array
+          items: { type: "string" }
+        operators:
+          type: array
+          items: { type: "string" }
+        coherence: { type: ["string", "null"] }
+        drift: { type: ["string", "null"] }
+        paradox: { type: ["string", "null"] }
+
+    ClarityScanStrict:
+      type: object
+      required: ["anchors", "tensions", "gaps", "load_bearing", "stability"]
+      properties:
+        anchors:
+          type: array
+          items: { type: "string" }
+        tensions:
+          type: array
+          items: { type: "string" }
+        gaps:
+          type: array
+          items: { type: "string" }
+        load_bearing:
+          type: array
+          items: { type: "string" }
+        stability:
+          type: string
+
+    DiagnosticsStrict:
+      type: object
+      required: ["issues", "warnings", "stats"]
+      properties:
+        issues:
+          type: array
+          items: { type: "string" }
+        warnings:
+          type: array
+          items: { type: "string" }
+        stats:
+          type: object
+          required: ["timestamp", "length"]
+          properties:
+            timestamp: { type: "number" }
+            length: { type: "number" }
+
+    ClarityGraphNodeOutput:
+      type: object
+      required: ["id", "clarity_surface", "clarity_scan", "diagnostics"]
+      properties:
+        id:
+          type: string
+        label:
+          type: ["string", "null"]
+        clarity_surface:
+          $ref: "#/components/schemas/ClaritySurfaceStrict"
+        clarity_scan:
+          $ref: "#/components/schemas/ClarityScanStrict"
+        diagnostics:
+          $ref: "#/components/schemas/DiagnosticsStrict"
+
+    ClarityGraphOutput:
+      type: object
+      required: ["nodes", "edges"]
+      properties:
+        nodes:
+          type: array
+          items:
+            $ref: "#/components/schemas/ClarityGraphNodeOutput"
+        edges:
+          type: array
+          items:
+            $ref: "#/components/schemas/GraphEdgeInput"
+
+    ErrorOutput:
+      type: object
+      properties:
+        error: { type: "string" }
