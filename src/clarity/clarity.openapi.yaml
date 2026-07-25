@@ -1,1 +1,106 @@
+openapi: 3.1.0
+info:
+  title: RTT/1 Clarity API
+  version: 1.0.0-alpha
+  description: >
+    Canonical RTT/1 clarity engine API surface.
+    Produces clarity-surface + clarity-scan + diagnostics.
+
+servers:
+  - url: local
+    description: Browser or worker execution
+
+paths:
+  /clarity:
+    post:
+      summary: Extract RTT/1 clarity surface + clarity scan
+      operationId: clarity
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ClarityInput"
+      responses:
+        "200":
+          description: RTT/1 clarity output
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClarityOutput"
+
+components:
+  schemas:
+
+    ClarityInput:
+      type: object
+      description: Input payload for clarity extraction.
+      additionalProperties: true
+
+    ClaritySurface:
+      type: object
+      required: ["summary", "signals", "operators", "coherence", "drift", "paradox"]
+      properties:
+        summary: { type: ["string", "null"] }
+        signals:
+          type: array
+          items: { type: "string" }
+        operators:
+          type: array
+          items: { type: "string" }
+        coherence: { type: ["string", "null"] }
+        drift: { type: ["string", "null"] }
+        paradox: { type: ["string", "null"] }
+
+    ClarityScan:
+      type: object
+      required: ["anchors", "tensions", "gaps", "load_bearing", "stability"]
+      properties:
+        anchors:
+          type: array
+          items: { type: "string" }
+        tensions:
+          type: array
+          items: { type: "string" }
+        gaps:
+          type: array
+          items: { type: "string" }
+        load_bearing:
+          type: array
+          items: { type: "string" }
+        stability:
+          type: "string"
+
+    Diagnostics:
+      type: object
+      required: ["issues", "warnings", "stats"]
+      properties:
+        issues:
+          type: array
+          items: { type: "string" }
+        warnings:
+          type: array
+          items: { type: "string" }
+        stats:
+          type: object
+          required: ["timestamp", "length"]
+          properties:
+            timestamp: { type: "number" }
+            length: { type: "number" }
+
+    ClarityOutput:
+      type: object
+      required: ["clarity_surface", "clarity_scan", "diagnostics"]
+      properties:
+        clarity_surface:
+          $ref: "#/components/schemas/ClaritySurface"
+        clarity_scan:
+          $ref: "#/components/schemas/ClarityScan"
+        diagnostics:
+          $ref: "#/components/schemas/Diagnostics"
+
+    ErrorOutput:
+      type: object
+      properties:
+        error: { type: "string" }
 
