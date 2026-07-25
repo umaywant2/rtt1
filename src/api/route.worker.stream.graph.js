@@ -1,6 +1,6 @@
 /**
  * ------------------------------------------------------------
- * RTT/1 — Hybrid Graph + Streaming Worker Router
+ * RTT/1 — Hybrid Graph + Streaming Worker Router (Annotated)
  * Module: API.Route.Worker.StreamGraph
  * Version: 1.0.0-alpha
  * Coherence: Declared
@@ -15,9 +15,9 @@ import { analyze } from "./analyze.js";
 import { buildReportFromAnalysis } from "./report.js";
 
 /**
- * ------------------------------------------------------------
- * Utilities
- * ------------------------------------------------------------
+ * Normalize graph structure:
+ * - Ensure nodes is an array
+ * - Ensure edges is an array
  */
 function normalizeGraph(graph = {}) {
   return {
@@ -26,6 +26,12 @@ function normalizeGraph(graph = {}) {
   };
 }
 
+/**
+ * Stream chunks:
+ * - Analyze each chunk
+ * - Merge substrate signals/operators incrementally
+ * - Emit partial results for UI streaming
+ */
 async function streamChunks(chunks = []) {
   const combined = { substrate: { signals: [], operators: [] } };
 
@@ -45,10 +51,14 @@ async function streamChunks(chunks = []) {
   return combined;
 }
 
+/**
+ * Analyze a single graph node:
+ * - If node contains chunks → stream them
+ * - Otherwise → normal analysis
+ */
 async function analyzeNode(node) {
   const payload = node.payload ?? {};
 
-  // If node contains chunks, stream them
   if (Array.isArray(payload.chunks)) {
     const streamed = await streamChunks(payload.chunks);
     return {
@@ -59,7 +69,6 @@ async function analyzeNode(node) {
     };
   }
 
-  // Otherwise run normal analysis
   const analysis = await analyze(payload);
   return {
     id: node.id,
@@ -70,9 +79,10 @@ async function analyzeNode(node) {
 }
 
 /**
- * ------------------------------------------------------------
- * Graph routes
- * ------------------------------------------------------------
+ * Graph analysis:
+ * - Process each node
+ * - Emit partial node results
+ * - Return graph-shaped hybrid output
  */
 async function handleGraphAnalyze(graph = {}) {
   const g = normalizeGraph(graph);
@@ -92,6 +102,11 @@ async function handleGraphAnalyze(graph = {}) {
   return { nodes: results, edges: g.edges };
 }
 
+/**
+ * Graph report:
+ * - Generate full RTT/1 report per node
+ * - Emit partial report results
+ */
 async function handleGraphReport(graph = {}) {
   const g = normalizeGraph(graph);
   const reports = [];
@@ -117,9 +132,9 @@ async function handleGraphReport(graph = {}) {
 }
 
 /**
- * ------------------------------------------------------------
- * Metadata
- * ------------------------------------------------------------
+ * Metadata block:
+ * - Canon RTT/1 metadata
+ * - Lists all hybrid endpoints
  */
 function handleMeta() {
   return {
@@ -137,9 +152,9 @@ function handleMeta() {
 }
 
 /**
- * ------------------------------------------------------------
- * Worker router
- * ------------------------------------------------------------
+ * Worker router:
+ * - Dispatch hybrid routes
+ * - Emit unified envelopes
  */
 self.onmessage = async (event) => {
   const { route, payload } = event.data;
@@ -178,4 +193,3 @@ self.onmessage = async (event) => {
     });
   }
 };
-
