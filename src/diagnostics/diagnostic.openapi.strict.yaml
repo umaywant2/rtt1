@@ -1,1 +1,60 @@
+openapi: 3.1.0
+info:
+  title: RTT/1 Diagnostic API (Strict)
+  version: 1.0.0-alpha
+  description: >
+    Strict RTT/1 diagnostic engine API.
+    Produces issues, warnings, and stats for any input payload.
+
+servers:
+  - url: local
+    description: Browser or worker execution
+
+paths:
+  /diagnostics:
+    post:
+      summary: Generate strict RTT/1 diagnostics
+      operationId: diagnosticsStrict
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DiagnosticInputStrict"
+      responses:
+        "200":
+          description: Strict RTT/1 diagnostic output
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DiagnosticOutputStrict"
+
+components:
+  schemas:
+
+    DiagnosticInputStrict:
+      type: object
+      additionalProperties: true
+
+    DiagnosticOutputStrict:
+      type: object
+      required: ["issues", "warnings", "stats"]
+      properties:
+        issues:
+          type: array
+          items: { type: "string" }
+        warnings:
+          type: array
+          items: { type: "string" }
+        stats:
+          type: object
+          required: ["timestamp", "length"]
+          properties:
+            timestamp: { type: "number" }
+            length: { type: "number" }
+
+    ErrorOutputStrict:
+      type: object
+      properties:
+        error: { type: "string" }
 
