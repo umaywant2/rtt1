@@ -1,1 +1,260 @@
+openapi: 3.1.0
+info:
+  title: RTT/1 Graph Worker API
+  version: 1.0.0-alpha
+  description: >
+    Graph-based worker API surface for RTT/1 analysis and reporting.
+    This specification describes the routes implemented in
+    src/api/route.worker.graph.js.
+
+servers:
+  - url: local
+    description: Worker-thread execution (no network transport)
+
+paths:
+  /graph-analyze:
+    post:
+      summary: Run RTT/1 analysis per node in a graph
+      operationId: graphAnalyze
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GraphInput"
+      responses:
+        "200":
+          description: Graph-shaped analysis output
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GraphAnalysisOutput"
+
+  /graph-report:
+    post:
+      summary: Generate RTT/1 reports per node in a graph
+      operationId: graphReport
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GraphInput"
+      responses:
+        "200":
+          description: Graph-shaped report output
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GraphReportOutput"
+
+  /meta:
+    get:
+      summary: Retrieve RTT/1 graph worker metadata
+      operationId: graphWorkerMeta
+      responses:
+        "200":
+          description: Metadata describing the graph worker router
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MetaOutput"
+
+components:
+  schemas:
+
+    GraphInput:
+      type: object
+      description: Graph payload passed to the worker router.
+      properties:
+        graph:
+          type: object
+          properties:
+            nodes:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  label:
+                    type: [string, "null"]
+                  payload:
+                    type: object
+                    additionalProperties: true
+            edges:
+              type: array
+              items:
+                type: object
+                properties:
+                  from:
+                    type: string
+                  to:
+                    type: string
+      required:
+        - graph
+
+    AnalysisOutput:
+      type: object
+      description: Raw analysis output from analyze.js
+      properties:
+        clarity_surface:
+          type: [object, "null"]
+        drift:
+          type: [string, "null"]
+        coherence:
+          type: [number, "null"]
+        substrate:
+          type: [object, "null"]
+          properties:
+            summary:
+              type: [string, "null"]
+            signals:
+              type: array
+              items:
+                type: string
+            operators:
+              type: array
+              items:
+                type: string
+        diagnostics:
+          type: object
+          properties:
+            issues:
+              type: array
+              items:
+                type: string
+            warnings:
+              type: array
+              items:
+                type: string
+            stats:
+              type: object
+
+    ReportOutput:
+      type: object
+      description: Full RTT/1 report object from report.js
+      properties:
+        meta:
+          type: object
+          properties:
+            module:
+              type: string
+            timestamp:
+              type: number
+            rtt:
+              type: number
+            coherence:
+              type: [number, "null"]
+            drift:
+              type: [string, "null"]
+        substrate:
+          type: object
+          properties:
+            summary:
+              type: [string, "null"]
+            signals:
+              type: array
+              items:
+                type: string
+            operators:
+              type: array
+              items:
+                type: string
+        diagnostics:
+          type: object
+          properties:
+            issues:
+              type: array
+              items:
+                type: string
+            warnings:
+              type: array
+              items:
+                type: string
+            stats:
+              type: object
+        payload:
+          type: object
+          properties:
+            input:
+              type: object
+            analysis:
+              $ref: "#/components/schemas/AnalysisOutput"
+
+    GraphAnalysisOutput:
+      type: object
+      description: Graph-shaped analysis output.
+      properties:
+        nodes:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              label:
+                type: [string, "null"]
+              analysis:
+                $ref: "#/components/schemas/AnalysisOutput"
+              report:
+                $ref: "#/components/schemas/ReportOutput"
+        edges:
+          type: array
+          items:
+            type: object
+            properties:
+              from:
+                type: string
+              to:
+                type: string
+
+    GraphReportOutput:
+      type: object
+      description: Graph-shaped report output.
+      properties:
+        nodes:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              label:
+                type: [string, "null"]
+              report:
+                $ref: "#/components/schemas/ReportOutput"
+        edges:
+          type: array
+          items:
+            type: object
+            properties:
+              from:
+                type: string
+              to:
+                type: string
+
+    MetaOutput:
+      type: object
+      description: Metadata returned by graph worker meta route.
+      properties:
+        rtt:
+          type: number
+        module:
+          type: string
+        version:
+          type: string
+        environment:
+          type: string
+        endpoints:
+          type: array
+          items:
+            type: string
+
+    ErrorOutput:
+      type: object
+      description: Error envelope for unknown routes.
+      properties:
+        error:
+          type: string
 
