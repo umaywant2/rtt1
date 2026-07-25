@@ -1,1 +1,69 @@
+openapi: 3.1.0
+info:
+  title: RTT/1 Examples API
+  version: 1.0.0-alpha
+  description: >
+    Example endpoints for RTT/1 clarity, diagnostics, and graph examples.
+
+paths:
+  /examples/clarity:
+    get:
+      summary: Return example clarity output
+      operationId: exampleClarity
+      responses:
+        "200":
+          description: Example clarity output
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExampleClarity"
+
+  /examples/graph:
+    get:
+      summary: Return example graph clarity output
+      operationId: exampleGraph
+      responses:
+        "200":
+          description: Example graph output
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExampleGraph"
+
+  /examples/report:
+    get:
+      summary: Return example RTT/1 report
+      operationId: exampleReport
+      responses:
+        "200":
+          description: Example report
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExampleReport"
+
+components:
+  schemas:
+
+    ExampleClarity:
+      type: object
+      properties:
+        input: { type: object }
+        clarity_surface: { type: object }
+        clarity_scan: { type: object }
+        diagnostics: { type: object }
+
+    ExampleGraph:
+      type: object
+      properties:
+        graph: { type: object }
+        clarity: { type: object }
+
+    ExampleReport:
+      type: object
+      properties:
+        input: { type: object }
+        clarity_surface: { type: object }
+        clarity_scan: { type: object }
+        diagnostics: { type: object }
 
