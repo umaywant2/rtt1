@@ -1,1 +1,98 @@
+{
+  "id": "rtt1",
+  "name": "RTT/1 Structural Engine",
+  "version": "1.0.0",
+  "engine_type": "structural",
+  "grammar": "S-mode structural critique",
+  "session": {
+    "rtt": 1,
+    "coherence": "declared",
+    "drift": "bounded",
+    "paradox": "structural"
+  },
+
+  "pipeline": [
+    "clarity_surface",
+    "load_bearing_detection",
+    "contradiction_scan",
+    "structural_critique",
+    "diagnostic_surface"
+  ],
+
+  "routes": {
+    "default": {
+      "description": "RTT/1 structural engine pipeline",
+      "steps": [
+        "clarity_surface",
+        "load_bearing_detection",
+        "contradiction_scan",
+        "structural_critique",
+        "diagnostic_surface"
+      ]
+    }
+  },
+
+  "modules": {
+    "clarity_surface": {
+      "input": "text",
+      "output": "clarity/surface",
+      "layer": "clarity",
+      "grammar": "S-mode clarity surface"
+    },
+    "load_bearing_detection": {
+      "input": "clarity/surface",
+      "output": "structural/load_bearing_map",
+      "layer": "structural",
+      "grammar": "S-mode load-bearing detection"
+    },
+    "contradiction_scan": {
+      "input": "clarity/surface",
+      "output": "structural/contradiction_scan",
+      "layer": "structural",
+      "grammar": "S-mode contradiction scan"
+    },
+    "structural_critique": {
+      "input": [
+        "clarity/surface",
+        "structural/load_bearing_map",
+        "structural/contradiction_scan"
+      ],
+      "output": "structural/critique",
+      "layer": "structural",
+      "grammar": "S-mode structural critique"
+    },
+    "diagnostic_surface": {
+      "input": [
+        "clarity/surface",
+        "structural/critique",
+        "structural/load_bearing_map",
+        "structural/contradiction_scan"
+      ],
+      "output": "diagnostics/table",
+      "layer": "diagnostics",
+      "grammar": "S-mode diagnostic table"
+    }
+  },
+
+  "io": {
+    "entry": "text",
+    "primary_outputs": [
+      "clarity/surface",
+      "structural/critique",
+      "diagnostics/table"
+    ]
+  },
+
+  "metadata": {
+    "source": "https://github.com/umaywant2/rtt1",
+    "capture": "https://raw.githubusercontent.com/umaywant2/gradient/refs/heads/main/g_Capture.md",
+    "tags": [
+      "rtt",
+      "structural",
+      "clarity",
+      "diagnostics",
+      "triadicframeworks"
+    ]
+  }
+}
 
