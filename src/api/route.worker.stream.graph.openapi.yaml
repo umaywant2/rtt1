@@ -1,1 +1,183 @@
+openapi: 3.1.0
+info:
+  title: RTT/1 Hybrid Graph + Streaming Worker API
+  version: 1.0.0-alpha
+  description: >
+    Hybrid graph + streaming worker API surface for RTT/1 substrate extraction.
+    This specification describes the routes implemented in
+    src/api/route.worker.stream.graph.js.
+
+servers:
+  - url: local
+    description: Worker-thread execution (no network transport)
+
+paths:
+  /graph-analyze:
+    post:
+      summary: Run hybrid graph + streaming RTT/1 analysis
+      operationId: streamGraphAnalyze
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GraphInput"
+      responses:
+        "200":
+          description: Graph-shaped hybrid analysis output
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GraphHybridOutput"
+
+  /graph-report:
+    post:
+      summary: Generate RTT/1 reports per node
+      operationId: streamGraphReport
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GraphInput"
+      responses:
+        "200":
+          description: Graph-shaped report output
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GraphReportOutput"
+
+  /stream-chunk:
+    post:
+      summary: Stream chunk analysis independently
+      operationId: streamChunk
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StreamInput"
+      responses:
+        "200":
+          description: Combined streaming output
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StreamOutput"
+
+  /meta:
+    get:
+      summary: Retrieve hybrid worker metadata
+      operationId: streamGraphMeta
+      responses:
+        "200":
+          description: Metadata describing the hybrid router
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MetaOutput"
+
+components:
+  schemas:
+
+    GraphInput:
+      type: object
+      properties:
+        graph:
+          type: object
+          properties:
+            nodes:
+              type: array
+              items:
+                type: object
+                properties:
+                  id: { type: string }
+                  label: { type: ["string", "null"] }
+                  payload:
+                    type: object
+                    additionalProperties: true
+            edges:
+              type: array
+              items:
+                type: object
+                properties:
+                  from: { type: string }
+                  to: { type: string }
+      required:
+        - graph
+
+    StreamInput:
+      type: object
+      properties:
+        chunks:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+      required:
+        - chunks
+
+    StreamOutput:
+      type: object
+      properties:
+        substrate:
+          type: object
+          properties:
+            signals:
+              type: array
+              items: { type: string }
+            operators:
+              type: array
+              items: { type: string }
+
+    GraphHybridOutput:
+      type: object
+      description: Hybrid graph + streaming output.
+      properties:
+        nodes:
+          type: array
+          items:
+            type: object
+            properties:
+              id: { type: string }
+              label: { type: ["string", "null"] }
+              streamed:
+                $ref: "#/components/schemas/StreamOutput"
+              analysis:
+                $ref: "#/components/schemas/AnalysisOutput"
+              report:
+                $ref: "#/components/schemas/ReportOutput"
+        edges:
+          type: array
+          items:
+            type: object
+            properties:
+              from: { type: string }
+              to: { type: string }
+
+    GraphReportOutput:
+      type: object
+
+    AnalysisOutput:
+      type: object
+
+    ReportOutput:
+      type: object
+
+    MetaOutput:
+      type: object
+      properties:
+        rtt: { type: number }
+        module: { type: string }
+        version: { type: string }
+        environment: { type: string }
+        endpoints:
+          type: array
+          items: { type: string }
+
+    ErrorOutput:
+      type: object
+      properties:
+        error: { type: string }
 
