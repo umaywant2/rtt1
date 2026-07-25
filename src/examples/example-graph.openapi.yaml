@@ -1,1 +1,77 @@
+openapi: 3.1.0
+info:
+  title: RTT/1 Example Graph API
+  version: 1.0.0-alpha
+  description: >
+    Example graph endpoint demonstrating RTT/1 clarity + diagnostics
+    applied to a small two-node dependency graph.
+
+paths:
+  /examples/graph:
+    get:
+      summary: Return RTT/1 example graph output
+      operationId: exampleGraph
+      responses:
+        "200":
+          description: Example graph clarity + diagnostics
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExampleGraph"
+
+components:
+  schemas:
+
+    ExampleGraph:
+      type: object
+      properties:
+        graph:
+          type: object
+          properties:
+            nodes:
+              type: array
+              items:
+                $ref: "#/components/schemas/GraphNode"
+            edges:
+              type: array
+              items:
+                $ref: "#/components/schemas/GraphEdge"
+
+        clarity:
+          type: object
+          properties:
+            nodes:
+              type: array
+              items:
+                $ref: "#/components/schemas/ClarityNode"
+            edges:
+              type: array
+              items:
+                $ref: "#/components/schemas/GraphEdge"
+
+    GraphNode:
+      type: object
+      required: ["id", "payload"]
+      properties:
+        id: { type: "string" }
+        label: { type: ["string", "null"] }
+        payload:
+          type: object
+          additionalProperties: true
+
+    GraphEdge:
+      type: object
+      required: ["from", "to"]
+      properties:
+        from: { type: "string" }
+        to: { type: "string" }
+        label: { type: ["string", "null"] }
+
+    ClarityNode:
+      type: object
+      required: ["id", "clarity_surface", "clarity_scan"]
+      properties:
+        id: { type: "string" }
+        clarity_surface: { type: "object" }
+        clarity_scan: { type: "object" }
 
