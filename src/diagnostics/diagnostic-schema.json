@@ -1,1 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "RTT/1 Diagnostic Schema",
+  "description": "Strict RTT/1 diagnostic envelope schema.",
+  "type": "object",
+
+  "properties": {
+    "issues": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "warnings": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "stats": {
+      "type": "object",
+      "required": ["timestamp", "length"],
+      "properties": {
+        "timestamp": { "type": "number" },
+        "length": { "type": "number" }
+      }
+    }
+  },
+
+  "required": ["issues", "warnings", "stats"]
+}
 
