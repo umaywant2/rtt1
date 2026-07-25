@@ -1,77 +1,65 @@
 /**
  * ------------------------------------------------------------
- * RTT/1 — Worker Router
- * Module: API.Route.Worker
+ * RTT/1 — Offloaded Report Generator (Worker Edition)
+ * Module: Analyzer.Report.Worker
  * Version: 1.0.0-alpha
  * Coherence: Declared
  * Purpose:
- *   Provide a worker-thread API surface for RTT/1 analysis
- *   and reporting, keeping the UI thread responsive.
+ *   Generate RTT/1 reports inside a worker context.
+ *   Wraps analyze() and produces a stable RTT/1 report object.
  * ------------------------------------------------------------
  */
 
 import { analyze } from "./analyze.js";
-import { buildReportFromAnalysis } from "./report.js";
 
-/**
- * ------------------------------------------------------------
- * Route handlers (worker-safe)
- * ------------------------------------------------------------
- */
-async function handleAnalyze(payload = {}) {
-  return analyze(payload);
-}
+export function buildWorkerReport(input = {}) {
+  const analysis = analyze(input);
 
-async function handleReport(payload = {}) {
-  return buildReportFromAnalysis(payload, analyze);
-}
-
-function handleMeta() {
   return {
-    rtt: 1,
-    module: "API.Route.Worker",
-    version: "1.0.0-alpha",
-    environment: "worker",
-    endpoints: ["analyze", "report", "meta"]
+    meta: {
+      module: "Analyzer.Report.Worker",
+      timestamp: Date.now(),
+      rtt: 1,
+      coherence: analysis.coherence,
+      drift: analysis.drift
+    },
+
+    substrate: {
+      summary: analysis.substrate.summary,
+      signals: analysis.substrate.signals,
+      operators: analysis.substrate.operators
+    },
+
+    diagnostics: analysis.diagnostics,
+
+    payload: {
+      input,
+      analysis
+    }
   };
 }
 
 /**
- * ------------------------------------------------------------
- * Worker message router
- * ------------------------------------------------------------
+ * Convenience wrapper for worker pipelines.
  */
-self.onmessage = async (event) => {
-  const { route, payload } = event.data;
+export function buildWorkerReportFromAnalysis(input, analyzeFn = analyze) {
+  const analysis = analyzeFn(input);
 
-  try {
-    let result;
+  return {
+    meta: {
+      module: "Analyzer.Report.Worker",
+      timestamp: Date.now(),
+      rtt: 1,
+      coherence: analysis.coherence,
+      drift: analysis.drift
+    },
 
-    switch (route) {
-      case "analyze":
-        result = await handleAnalyze(payload);
-        break;
+    substrate: analysis.substrate,
+    diagnostics: analysis.diagnostics,
 
-      case "report":
-        result = await handleReport(payload);
-        break;
-
-      case "meta":
-        result = handleMeta();
-        break;
-
-      default:
-        result = { error: `Unknown worker route: ${route}` };
-        break;
+    payload: {
+      input,
+      analysis
     }
-
-    self.postMessage({ ok: true, route, result });
-  } catch (err) {
-    self.postMessage({
-      ok: false,
-      route,
-      error: err.message || String(err)
-    });
-  }
-};
-
+  };
+}
