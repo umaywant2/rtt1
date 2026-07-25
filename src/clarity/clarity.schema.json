@@ -1,1 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "RTT/1 Clarity Schema",
+  "description": "Canonical RTT/1 clarity-surface + clarity-scan schema.",
+  "type": "object",
+
+  "properties": {
+    "clarity_surface": {
+      "type": "object",
+      "required": ["summary", "signals", "operators", "coherence", "drift", "paradox"],
+      "properties": {
+        "summary": { "type": ["string", "null"] },
+        "signals": { "type": "array", "items": { "type": "string" } },
+        "operators": { "type": "array", "items": { "type": "string" } },
+        "coherence": { "type": ["string", "null"] },
+        "drift": { "type": ["string", "null"] },
+        "paradox": { "type": ["string", "null"] }
+      }
+    },
+
+    "clarity_scan": {
+      "type": "object",
+      "required": ["anchors", "tensions", "gaps", "load_bearing", "stability"],
+      "properties": {
+        "anchors": { "type": "array", "items": { "type": "string" } },
+        "tensions": { "type": "array", "items": { "type": "string" } },
+        "gaps": { "type": "array", "items": { "type": "string" } },
+        "load_bearing": { "type": "array", "items": { "type": "string" } },
+        "stability": { "type": "string" }
+      }
+    },
+
+    "diagnostics": {
+      "type": "object",
+      "required": ["issues", "warnings", "stats"],
+      "properties": {
+        "issues": { "type": "array", "items": { "type": "string" } },
+        "warnings": { "type": "array", "items": { "type": "string" } },
+        "stats": {
+          "type": "object",
+          "required": ["timestamp", "length"],
+          "properties": {
+            "timestamp": { "type": "number" },
+            "length": { "type": "number" }
+          }
+        }
+      }
+    }
+  },
+
+  "required": ["clarity_surface", "clarity_scan", "diagnostics"]
+}
 
