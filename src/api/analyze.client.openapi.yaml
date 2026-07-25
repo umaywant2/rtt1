@@ -1,0 +1,76 @@
+openapi: 3.1.0
+info:
+  title: RTT/1 Client Analyzer API
+  version: 1.0.0-alpha
+  description: >
+    Browser-optimized RTT/1 analyzer API surface.
+    Wraps analyzeClient() and produces canonical RTT/1 analysis objects.
+
+servers:
+  - url: local
+    description: Browser execution (no worker)
+
+paths:
+  /analyze-client:
+    post:
+      summary: Run RTT/1 analysis in browser context
+      operationId: analyzeClient
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AnalyzeClientInput"
+      responses:
+        "200":
+          description: RTT/1 client analysis output
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnalyzeClientOutput"
+
+components:
+  schemas:
+
+    AnalyzeClientInput:
+      type: object
+      description: Input payload for RTT/1 client analysis.
+      additionalProperties: true
+
+    AnalyzeClientOutput:
+      type: object
+      required: ["module", "rtt", "coherence", "drift", "substrate", "diagnostics"]
+      properties:
+        module: { type: "string", const: "Analyzer.Core.Client" }
+        rtt: { type: "number" }
+        coherence: { type: ["number", "null"] }
+        drift: { type: ["string", "null"] }
+        substrate:
+          type: ["object", "null"]
+          properties:
+            summary: { type: ["string", "null"] }
+            signals:
+              type: array
+              items: { type: "string" }
+            operators:
+              type: array
+              items: { type: "string" }
+        diagnostics:
+          type: object
+          properties:
+            issues:
+              type: array
+              items: { type: "string" }
+            warnings:
+              type: array
+              items: { type: "string" }
+            stats:
+              type: object
+              properties:
+                timestamp: { type: "number" }
+                length: { type: "number" }
+
+    ErrorOutput:
+      type: object
+      properties:
+        error: { type: "string" }
