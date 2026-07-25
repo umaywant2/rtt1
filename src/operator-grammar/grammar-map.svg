@@ -1,1 +1,43 @@
+<svg width="780" height="480" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .node { fill:#1a1a1a; stroke:#fff; stroke-width:1.4; }
+    .text { fill:#fff; font-family:Arial, sans-serif; font-size:14px; }
+    .edge { stroke:#888; stroke-width:1.2; }
+  </style>
+
+  <!-- Operator Families -->
+  <rect x="40" y="40" width="200" height="60" class="node"/>
+  <text x="60" y="75" class="text">Structural Operators</text>
+
+  <rect x="300" y="40" width="200" height="60" class="node"/>
+  <text x="320" y="75" class="text">Semantic Operators</text>
+
+  <rect x="560" y="40" width="200" height="60" class="node"/>
+  <text x="580" y="75" class="text">Regime Operators</text>
+
+  <!-- Structural -->
+  <rect x="40" y="140" width="200" height="50" class="node"/>
+  <text x="60" y="170" class="text">structure</text>
+
+  <rect x="40" y="210" width="200" height="50" class="node"/>
+  <text x="60" y="240" class="text">claim</text>
+
+  <!-- Semantic -->
+  <rect x="300" y="140" width="200" height="50" class="node"/>
+  <text x="320" y="170" class="text">signal</text>
+
+  <rect x="300" y="210" width="200" height="50" class="node"/>
+  <text x="320" y="240" class="text">anchor</text>
+
+  <!-- Regime -->
+  <rect x="560" y="140" width="200" height="50" class="node"/>
+  <text x="580" y="170" class="text">coherence</text>
+
+  <rect x="560" y="210" width="200" height="50" class="node"/>
+  <text x="580" y="240" class="text">drift</text>
+
+  <!-- Edges -->
+  <line x1="140" y1="100" x2="400" y2="100" class="edge"/>
+  <line x1="400" y1="100" x2="660" y2="100" class="edge"/>
+</svg>
 
