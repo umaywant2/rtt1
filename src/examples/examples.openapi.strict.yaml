@@ -1,1 +1,71 @@
+openapi: 3.1.0
+info:
+  title: RTT/1 Examples API (Strict)
+  version: 1.0.0-alpha
+  description: >
+    Strict RTT/1 example endpoints for clarity, graph, and report examples.
 
+paths:
+  /examples/clarity:
+    get:
+      summary: Return strict RTT/1 clarity example
+      operationId: exampleClarityStrict
+      responses:
+        "200":
+          description: Strict clarity example
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExampleClarityStrict"
+
+  /examples/graph:
+    get:
+      summary: Return strict RTT/1 graph example
+      operationId: exampleGraphStrict
+      responses:
+        "200":
+          description: Strict graph example
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExampleGraphStrict"
+
+  /examples/report:
+    get:
+      summary: Return strict RTT/1 report example
+      operationId: exampleReportStrict
+      responses:
+        "200":
+          description: Strict report example
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExampleReportStrict"
+
+components:
+  schemas:
+
+    ExampleClarityStrict:
+      type: object
+      required: ["input","clarity_surface","clarity_scan","diagnostics"]
+      properties:
+        input: { type: object }
+        clarity_surface: { type: object }
+        clarity_scan: { type: object }
+        diagnostics: { type: object }
+
+    ExampleGraphStrict:
+      type: object
+      required: ["graph","clarity"]
+      properties:
+        graph: { type: object }
+        clarity: { type: object }
+
+    ExampleReportStrict:
+      type: object
+      required: ["input","clarity_surface","clarity_scan","diagnostics"]
+      properties:
+        input: { type: object }
+        clarity_surface: { type: object }
+        clarity_scan: { type: object }
+        diagnostics: { type: object }
