@@ -1,10 +1,10 @@
 openapi: 3.1.0
 info:
-  title: RTT/1 Hybrid Graph + Streaming Worker API (Extended)
+  title: RTT/1 Hybrid Graph + Streaming Worker API (Strict)
   version: 1.0.0-alpha
   description: >
-    Extended hybrid graph + streaming worker API surface for RTT/1 substrate extraction.
-    Includes full node streaming, graph analysis, graph reporting, and chunk streaming.
+    Strict hybrid graph + streaming worker API surface for RTT/1 substrate extraction.
+    Enforces strict typing, required fields, and canonical RTT/1 output structure.
 
 servers:
   - url: local
@@ -13,85 +13,89 @@ servers:
 paths:
   /graph-analyze:
     post:
-      summary: Hybrid graph + streaming RTT/1 analysis
-      operationId: streamGraphAnalyze
+      summary: Strict hybrid graph + streaming RTT/1 analysis
+      operationId: strictStreamGraphAnalyze
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/GraphInput"
+              $ref: "#/components/schemas/GraphInputStrict"
       responses:
         "200":
-          description: Graph-shaped hybrid analysis output
+          description: Strict graph-shaped hybrid analysis output
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/GraphHybridOutput"
+                $ref: "#/components/schemas/GraphHybridOutputStrict"
 
   /graph-report:
     post:
-      summary: Generate RTT/1 reports per node
-      operationId: streamGraphReport
+      summary: Strict RTT/1 report generation per node
+      operationId: strictStreamGraphReport
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/GraphInput"
+              $ref: "#/components/schemas/GraphInputStrict"
       responses:
         "200":
-          description: Graph-shaped report output
+          description: Strict graph-shaped report output
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/GraphReportOutput"
+                $ref: "#/components/schemas/GraphReportOutputStrict"
 
   /stream-chunk:
     post:
-      summary: Stream chunk analysis independently
-      operationId: streamChunk
+      summary: Strict chunk streaming
+      operationId: strictStreamChunk
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/StreamInput"
+              $ref: "#/components/schemas/StreamInputStrict"
       responses:
         "200":
-          description: Combined streaming output
+          description: Strict combined streaming output
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StreamOutput"
+                $ref: "#/components/schemas/StreamOutputStrict"
 
   /meta:
     get:
-      summary: Retrieve hybrid worker metadata
-      operationId: streamGraphMeta
+      summary: Strict hybrid worker metadata
+      operationId: strictStreamGraphMeta
       responses:
         "200":
-          description: Metadata describing the hybrid router
+          description: Strict metadata block
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/MetaOutput"
+                $ref: "#/components/schemas/MetaOutputStrict"
 
 components:
   schemas:
 
-    GraphInput:
+    GraphInputStrict:
       type: object
+      required: ["graph"]
       properties:
         graph:
           type: object
+          required: ["nodes", "edges"]
           properties:
             nodes:
               type: array
+              minItems: 1
               items:
                 type: object
+                required: ["id", "payload"]
                 properties:
-                  id: { type: string }
+                  id: { type: "string" }
                   label: { type: ["string", "null"] }
                   payload:
                     type: object
@@ -100,82 +104,87 @@ components:
               type: array
               items:
                 type: object
+                required: ["from", "to"]
                 properties:
-                  from: { type: string }
-                  to: { type: string }
-      required:
-        - graph
+                  from: { type: "string" }
+                  to: { type: "string" }
 
-    StreamInput:
+    StreamInputStrict:
       type: object
+      required: ["chunks"]
       properties:
         chunks:
           type: array
+          minItems: 1
           items:
             type: object
             additionalProperties: true
-      required:
-        - chunks
 
-    StreamOutput:
+    StreamOutputStrict:
       type: object
+      required: ["substrate"]
       properties:
         substrate:
           type: object
+          required: ["signals", "operators"]
           properties:
             signals:
               type: array
-              items: { type: string }
+              items: { type: "string" }
             operators:
               type: array
-              items: { type: string }
+              items: { type: "string" }
 
-    GraphHybridOutput:
+    GraphHybridOutputStrict:
       type: object
-      description: Hybrid graph + streaming output.
+      required: ["nodes", "edges"]
       properties:
         nodes:
           type: array
           items:
             type: object
+            required: ["id", "report"]
             properties:
-              id: { type: string }
+              id: { type: "string" }
               label: { type: ["string", "null"] }
               streamed:
-                $ref: "#/components/schemas/StreamOutput"
+                $ref: "#/components/schemas/StreamOutputStrict"
               analysis:
-                $ref: "#/components/schemas/AnalysisOutput"
+                $ref: "#/components/schemas/AnalysisOutputStrict"
               report:
-                $ref: "#/components/schemas/ReportOutput"
+                $ref: "#/components/schemas/ReportOutputStrict"
         edges:
           type: array
           items:
             type: object
+            required: ["from", "to"]
             properties:
-              from: { type: string }
-              to: { type: string }
+              from: { type: "string" }
+              to: { type: "string" }
 
-    GraphReportOutput:
+    GraphReportOutputStrict:
       type: object
 
-    AnalysisOutput:
+    AnalysisOutputStrict:
       type: object
 
-    ReportOutput:
+    ReportOutputStrict:
       type: object
 
-    MetaOutput:
+    MetaOutputStrict:
       type: object
+      required: ["rtt", "module", "version", "environment", "endpoints"]
       properties:
-        rtt: { type: number }
-        module: { type: string }
-        version: { type: string }
-        environment: { type: string }
+        rtt: { type: "number" }
+        module: { type: "string" }
+        version: { type: "string" }
+        environment: { type: "string" }
         endpoints:
           type: array
-          items: { type: string }
+          items: { type: "string" }
 
-    ErrorOutput:
+    ErrorOutputStrict:
       type: object
+      required: ["error"]
       properties:
-        error: { type: string }
+        error: { type: "string" }
