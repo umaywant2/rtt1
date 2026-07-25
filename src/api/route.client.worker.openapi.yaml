@@ -1,1 +1,179 @@
+openapi: 3.1.0
+info:
+  title: RTT/1 Client Worker API
+  version: 1.0.0-alpha
+  description: >
+    Worker-thread client API surface for RTT/1 analysis and reporting.
+    This specification describes the routes implemented in
+    src/api/route.client.worker.js.
+
+servers:
+  - url: local
+    description: Client-side worker execution (no network transport)
+
+paths:
+  /analyze:
+    post:
+      summary: Run RTT/1 analysis inside a Web Worker
+      operationId: clientWorkerAnalyze
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+      responses:
+        "200":
+          description: Raw RTT/1 analysis output
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnalysisOutput"
+
+  /report:
+    post:
+      summary: Generate a full RTT/1 report inside a Web Worker
+      operationId: clientWorkerReport
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+      responses:
+        "200":
+          description: Full RTT/1 report object
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReportOutput"
+
+  /meta:
+    get:
+      summary: Retrieve RTT/1 client worker metadata
+      operationId: clientWorkerMeta
+      responses:
+        "200":
+          description: Metadata describing the worker router
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MetaOutput"
+
+components:
+  schemas:
+
+    AnalysisOutput:
+      type: object
+      description: Raw analysis output from analyze.js
+      properties:
+        clarity_surface:
+          type: [object, "null"]
+        drift:
+          type: [string, "null"]
+        coherence:
+          type: [number, "null"]
+        substrate:
+          type: [object, "null"]
+          properties:
+            summary:
+              type: [string, "null"]
+            signals:
+              type: array
+              items:
+                type: string
+            operators:
+              type: array
+              items:
+                type: string
+        diagnostics:
+          type: object
+          properties:
+            issues:
+              type: array
+              items:
+                type: string
+            warnings:
+              type: array
+              items:
+                type: string
+            stats:
+              type: object
+
+    ReportOutput:
+      type: object
+      description: Full RTT/1 report object from report.js
+      properties:
+        meta:
+          type: object
+          properties:
+            module:
+              type: string
+            timestamp:
+              type: number
+            rtt:
+              type: number
+            coherence:
+              type: [number, "null"]
+            drift:
+              type: [string, "null"]
+        substrate:
+          type: object
+          properties:
+            summary:
+              type: [string, "null"]
+            signals:
+              type: array
+              items:
+                type: string
+            operators:
+              type: array
+              items:
+                type: string
+        diagnostics:
+          type: object
+          properties:
+            issues:
+              type: array
+              items:
+                type: string
+            warnings:
+              type: array
+              items:
+                type: string
+            stats:
+              type: object
+        payload:
+          type: object
+          properties:
+            input:
+              type: object
+            analysis:
+              $ref: "#/components/schemas/AnalysisOutput"
+
+    MetaOutput:
+      type: object
+      description: Metadata returned by client worker meta route
+      properties:
+        rtt:
+          type: number
+        module:
+          type: string
+        version:
+          type: string
+        environment:
+          type: string
+        endpoints:
+          type: array
+          items:
+            type: string
+
+    ErrorOutput:
+      type: object
+      description: Error envelope for unknown routes
+      properties:
+        error:
+          type: string
 
