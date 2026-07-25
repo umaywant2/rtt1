@@ -1,11 +1,10 @@
 openapi: 3.1.0
 info:
-  title: RTT/1 Hybrid Graph + Streaming Worker API
+  title: RTT/1 Hybrid Graph + Streaming Worker API (Extended)
   version: 1.0.0-alpha
   description: >
-    Hybrid graph + streaming worker API surface for RTT/1 substrate extraction.
-    This specification describes the routes implemented in
-    src/api/route.worker.stream.graph.js.
+    Extended hybrid graph + streaming worker API surface for RTT/1 substrate extraction.
+    Includes full node streaming, graph analysis, graph reporting, and chunk streaming.
 
 servers:
   - url: local
@@ -14,7 +13,7 @@ servers:
 paths:
   /graph-analyze:
     post:
-      summary: Run hybrid graph + streaming RTT/1 analysis
+      summary: Hybrid graph + streaming RTT/1 analysis
       operationId: streamGraphAnalyze
       requestBody:
         required: true
@@ -180,4 +179,3 @@ components:
       type: object
       properties:
         error: { type: string }
-
