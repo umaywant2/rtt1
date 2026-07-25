@@ -1,1 +1,121 @@
+{
+  "engine": "rtt1",
+  "version": "1.0.0",
+  "session": {
+    "rtt": 1,
+    "coherence": "declared",
+    "drift": "bounded",
+    "paradox": "structural"
+  },
+
+  "structure_map": {
+    "layers": [
+      {
+        "id": "clarity_surface",
+        "name": "Clarity Surface",
+        "type": "surface",
+        "inputs": ["text"],
+        "outputs": ["clarity/surface"],
+        "depends_on": [],
+        "anchors": []
+      },
+      {
+        "id": "load_bearing_detection",
+        "name": "Load‑Bearing Detection",
+        "type": "structural",
+        "inputs": ["clarity/surface"],
+        "outputs": ["structural/load_bearing_map"],
+        "depends_on": ["clarity_surface"],
+        "anchors": ["load_bearing_candidates"]
+      },
+      {
+        "id": "contradiction_scan",
+        "name": "Contradiction Scan",
+        "type": "structural",
+        "inputs": ["clarity/surface"],
+        "outputs": ["structural/contradiction_scan"],
+        "depends_on": ["clarity_surface"],
+        "anchors": ["contradiction_geometry"]
+      },
+      {
+        "id": "structural_critique",
+        "name": "Structural Critique",
+        "type": "structural",
+        "inputs": [
+          "clarity/surface",
+          "structural/load_bearing_map",
+          "structural/contradiction_scan"
+        ],
+        "outputs": ["structural/critique"],
+        "depends_on": [
+          "clarity_surface",
+          "load_bearing_detection",
+          "contradiction_scan"
+        ],
+        "anchors": ["presence", "absence", "tension"]
+      },
+      {
+        "id": "diagnostic_surface",
+        "name": "Diagnostic Surface",
+        "type": "diagnostic",
+        "inputs": [
+          "clarity/surface",
+          "structural/critique",
+          "structural/load_bearing_map",
+          "structural/contradiction_scan"
+        ],
+        "outputs": ["diagnostics/table"],
+        "depends_on": [
+          "clarity_surface",
+          "structural_critique",
+          "load_bearing_detection",
+          "contradiction_scan"
+        ],
+        "anchors": ["diagnostic_summary"]
+      }
+    ],
+
+    "pipeline": [
+      "clarity_surface",
+      "load_bearing_detection",
+      "contradiction_scan",
+      "structural_critique",
+      "diagnostic_surface"
+    ],
+
+    "relationships": {
+      "clarity_surface": {
+        "feeds": ["load_bearing_detection", "contradiction_scan", "structural_critique", "diagnostic_surface"]
+      },
+      "load_bearing_detection": {
+        "feeds": ["structural_critique", "diagnostic_surface"]
+      },
+      "contradiction_scan": {
+        "feeds": ["structural_critique", "diagnostic_surface"]
+      },
+      "structural_critique": {
+        "feeds": ["diagnostic_surface"]
+      }
+    },
+
+    "geometry": {
+      "shape": "layered",
+      "flow": "linear",
+      "anchors": [
+        "load_bearing_candidates",
+        "contradiction_geometry",
+        "presence",
+        "absence",
+        "tension",
+        "diagnostic_summary"
+      ]
+    }
+  },
+
+  "metadata": {
+    "source": "https://github.com/umaywant2/rtt1",
+    "capture": "https://github.com/umaywant2/gradient/blob/main/g_Capture.md",
+    "tags": ["rtt", "structural", "triadicframeworks", "engine", "map"]
+  }
+}
 
