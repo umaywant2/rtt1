@@ -1,1 +1,20 @@
-
+{
+  "suite": "RTT/1 Diagnostics",
+  "version": "1.0.0-alpha",
+  "modules": [
+    "diagnostic-engine.js",
+    "diagnostic-worker.js",
+    "diagnostic-client.js",
+    "diagnostic.graph.js",
+    "diagnostic-schema.json",
+    "diagnostic-table.html",
+    "diagnostic-report.md"
+  ],
+  "categories": {
+    "core": ["diagnostic-engine.js", "diagnostic-schema.json"],
+    "worker": ["diagnostic-worker.js"],
+    "client": ["diagnostic-client.js"],
+    "graph": ["diagnostic.graph.js"],
+    "docs": ["diagnostic-table.html", "diagnostic-report.md"]
+  }
+}
