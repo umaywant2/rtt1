@@ -1,1 +1,136 @@
+openapi: 3.1.0
+info:
+  title: RTT/1 Streaming Worker API
+  version: 1.0.0-alpha
+  description: >
+    Streaming worker API surface for RTT/1 chunk-based analysis.
+    This specification describes the routes implemented in
+    src/api/route.worker.stream.js.
+
+servers:
+  - url: local
+    description: Worker-thread execution (no network transport)
+
+paths:
+  /stream-analyze:
+    post:
+      summary: Run chunked RTT/1 analysis inside a Web Worker
+      operationId: streamAnalyze
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StreamInput"
+      responses:
+        "200":
+          description: Combined RTT/1 analysis output after streaming
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StreamOutput"
+
+  /meta:
+    get:
+      summary: Retrieve RTT/1 streaming worker metadata
+      operationId: streamWorkerMeta
+      responses:
+        "200":
+          description: Metadata describing the streaming worker router
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MetaOutput"
+
+components:
+  schemas:
+
+    StreamInput:
+      type: object
+      description: Chunk array passed to the streaming worker.
+      properties:
+        chunks:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+      required:
+        - chunks
+
+    AnalysisOutput:
+      type: object
+      description: Raw analysis output from analyze.js
+      properties:
+        clarity_surface:
+          type: [object, "null"]
+        drift:
+          type: [string, "null"]
+        coherence:
+          type: [number, "null"]
+        substrate:
+          type: [object, "null"]
+          properties:
+            summary:
+              type: [string, "null"]
+            signals:
+              type: array
+              items:
+                type: string
+            operators:
+              type: array
+              items:
+                type: string
+        diagnostics:
+          type: object
+          properties:
+            issues:
+              type: array
+              items:
+                type: string
+            warnings:
+              type: array
+              items:
+                type: string
+            stats:
+              type: object
+
+    StreamOutput:
+      type: object
+      description: Combined streaming output after all chunks processed.
+      properties:
+        substrate:
+          type: object
+          properties:
+            signals:
+              type: array
+              items:
+                type: string
+            operators:
+              type: array
+              items:
+                type: string
+
+    MetaOutput:
+      type: object
+      description: Metadata returned by streaming worker meta route.
+      properties:
+        rtt:
+          type: number
+        module:
+          type: string
+        version:
+          type: string
+        environment:
+          type: string
+        endpoints:
+          type: array
+          items:
+            type: string
+
+    ErrorOutput:
+      type: object
+      description: Error envelope for unknown routes.
+      properties:
+        error:
+          type: string
 
