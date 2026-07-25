@@ -1,1 +1,83 @@
+{
+  "engine": "rtt1",
+  "version": "1.0.0",
+  "session": {
+    "rtt": 1,
+    "coherence": "declared",
+    "drift": "bounded",
+    "paradox": "structural"
+  },
+
+  "tests": [
+    {
+      "id": "rtt1-basic",
+      "description": "Basic RTT/1 pipeline test using a minimal synthetic input.",
+      "input": "A system claims it is both simple and complex.",
+      "expected": {
+        "clarity_surface": {
+          "summary": "The input presents a short statement about a system with two opposing attributes.",
+          "stated_elements": [
+            "The system is simple.",
+            "The system is complex."
+          ],
+          "surface_claims": [
+            "The system is simple.",
+            "The system is complex."
+          ],
+          "visible_structure": ["single sentence"],
+          "surface_vocabulary": ["system", "simple", "complex"],
+          "declared_relationships": ["simple vs complex"],
+          "surface_tensions": ["simple vs complex"],
+          "surface_gaps": [],
+          "surface_questions": ["What makes it simple?", "What makes it complex?"]
+        },
+
+        "load_bearing": {
+          "candidates": ["system identity", "attribute pair"],
+          "confirmed": ["attribute pair"],
+          "anchors": ["simple", "complex"],
+          "collapse_map": {
+            "attribute pair": ["surface tension", "contradiction candidates"]
+          },
+          "relationships": ["simple ↔ complex"],
+          "questions": ["How does the attribute pair stabilize?"]
+        },
+
+        "contradiction_scan": {
+          "direct": ["simple vs complex"],
+          "implicit": [],
+          "load_bearing_conflicts": ["attribute pair contains opposing values"],
+          "propagation": ["tension propagates through both attributes"],
+          "regime": ["declared coherence conflicts with opposing attributes"],
+          "geometry": {
+            "type": "linear",
+            "origin": "attribute pair",
+            "spread": ["simple", "complex"]
+          },
+          "questions": ["Is the contradiction structural or definitional?"]
+        },
+
+        "structural_critique": {
+          "presence": ["attribute pair"],
+          "absence": ["definition of simplicity", "definition of complexity"],
+          "tension": ["simple vs complex"],
+          "stability": "semi-stable",
+          "shape": {
+            "type": "linear",
+            "anchors": ["simple", "complex"],
+            "dependencies": ["attribute pair"]
+          },
+          "synthesis": "The structure relies on an unresolved attribute pair, producing tension and partial instability.",
+          "questions": ["What stabilizes the attribute pair?"]
+        },
+
+        "diagnostic_table": {
+          "diagnostic": {
+            "summary": "The input contains a direct contradiction between two attributes, producing structural tension and semi-stability."
+          }
+        }
+      }
+    }
+  ]
+}
 
