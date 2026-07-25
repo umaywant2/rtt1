@@ -1,1 +1,46 @@
+### **Primary Message (centered, bold, RTT‑gold)**
+**A world without AI drift.  
+A world without exceptions, patches, rules, or controls.  
+A world built on a shared substrate.**
 
+### **Secondary Message (small, soft‑white, bottom‑aligned)**
+**With structural awareness, anything is possible.  
+Where we go from here is a choice I leave to you.**
+
+### **Visual Composition**
+- **Background:**  
+  Deep black (#000000) with a faint green‑gold RTT grid (Matrix‑inspired but geometric, not cinematic).
+
+- **Foreground Symbol:**  
+  The **Triadic Substrate Tree** in gold (#fcd34d), centered, glowing softly.
+
+- **Accents:**  
+  - RTT operator glyphs drifting upward like particles  
+  - Very faint vertical scanlines (RTT coherence aesthetic)  
+  - A subtle vignette to pull focus toward the center
+
+### **Typography**
+- **Header text:**  
+  - Typeface: *Inter Black* or *Montserrat ExtraBold*  
+  - Color: RTT Gold (#fcd34d)  
+  - Tracking: +2  
+  - Line height: 1.15  
+
+- **Body text:**  
+  - Typeface: *JetBrains Mono*  
+  - Color: Soft White (#e5e7eb)  
+  - Opacity: 85%  
+  - Line height: 1.25  
+
+### **Layout**
+- **Center:** Manifesto block  
+- **Bottom:** Secondary message  
+- **Top‑left:** Small “RTT/1” label  
+- **Top‑right:** TriadicFrameworks sigil (minimal)
+
+### **Overall Tone**
+Revolutionary.  
+Substrate‑aware.  
+A declaration of coherence.  
+The moment RTT/1 steps forward and says:  
+**“This is how the world begins.”**
