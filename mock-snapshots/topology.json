@@ -1,1 +1,130 @@
+{
+  "engine": "rtt1",
+  "version": "1.0.0",
+  "session": {
+    "rtt": 1,
+    "coherence": "declared",
+    "drift": "bounded",
+    "paradox": "structural"
+  },
+
+  "nodes": [
+    {
+      "id": "full_pipeline",
+      "type": "snapshot",
+      "file": "full_pipeline.snapshot.json",
+      "layer": "pipeline",
+      "role": "root",
+      "description": "Aggregated RTT/1 pipeline snapshot including all layers."
+    },
+    {
+      "id": "clarity_surface",
+      "type": "snapshot",
+      "file": "clarity_surface.snapshot.json",
+      "layer": "clarity_surface",
+      "role": "layer",
+      "description": "Clarity surface snapshot representing surface geometry."
+    },
+    {
+      "id": "load_bearing",
+      "type": "snapshot",
+      "file": "load_bearing.snapshot.json",
+      "layer": "load_bearing",
+      "role": "layer",
+      "description": "Load-bearing snapshot representing anchor geometry."
+    },
+    {
+      "id": "contradiction_scan",
+      "type": "snapshot",
+      "file": "contradiction_scan.snapshot.json",
+      "layer": "contradiction_scan",
+      "role": "layer",
+      "description": "Contradiction scan snapshot representing conflict geometry."
+    },
+    {
+      "id": "structural_critique",
+      "type": "snapshot",
+      "file": "structural_critique.snapshot.json",
+      "layer": "structural_critique",
+      "role": "layer",
+      "description": "Structural critique snapshot representing stability geometry."
+    },
+    {
+      "id": "diagnostic_surface",
+      "type": "snapshot",
+      "file": "diagnostic_surface.snapshot.json",
+      "layer": "diagnostic_surface",
+      "role": "layer",
+      "description": "Diagnostic surface snapshot representing diagnostic geometry."
+    }
+  ],
+
+  "edges": [
+    {
+      "from": "full_pipeline",
+      "to": "clarity_surface",
+      "type": "contains",
+      "description": "Full pipeline snapshot contains clarity surface layer."
+    },
+    {
+      "from": "full_pipeline",
+      "to": "load_bearing",
+      "type": "contains",
+      "description": "Full pipeline snapshot contains load-bearing layer."
+    },
+    {
+      "from": "full_pipeline",
+      "to": "contradiction_scan",
+      "type": "contains",
+      "description": "Full pipeline snapshot contains contradiction scan layer."
+    },
+    {
+      "from": "full_pipeline",
+      "to": "structural_critique",
+      "type": "contains",
+      "description": "Full pipeline snapshot contains structural critique layer."
+    },
+    {
+      "from": "full_pipeline",
+      "to": "diagnostic_surface",
+      "type": "contains",
+      "description": "Full pipeline snapshot contains diagnostic surface layer."
+    },
+
+    {
+      "from": "clarity_surface",
+      "to": "load_bearing",
+      "type": "feeds",
+      "description": "Clarity surface geometry feeds load-bearing anchors."
+    },
+    {
+      "from": "load_bearing",
+      "to": "contradiction_scan",
+      "type": "feeds",
+      "description": "Load-bearing anchors and collapse maps feed contradiction scan."
+    },
+    {
+      "from": "contradiction_scan",
+      "to": "structural_critique",
+      "type": "feeds",
+      "description": "Contradiction geometry feeds structural critique."
+    },
+    {
+      "from": "structural_critique",
+      "to": "diagnostic_surface",
+      "type": "feeds",
+      "description": "Critique geometry feeds diagnostic surface."
+    }
+  ],
+
+  "metadata": {
+    "coverage": "complete",
+    "notes": [
+      "All RTT/1 layers represented as topology nodes.",
+      "Edges encode both containment and pipeline flow.",
+      "Graph is deterministic and CI-safe.",
+      "Topology aligns with mock-snapshots/topology.md and manifest.svg."
+    ]
+  }
+}
 
