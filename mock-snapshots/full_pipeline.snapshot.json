@@ -1,1 +1,63 @@
+{
+  "engine": "rtt1",
+  "version": "1.0.0",
+  "session": {
+    "rtt": 1,
+    "coherence": "declared",
+    "drift": "bounded",
+    "paradox": "structural"
+  },
+  "clarity_surface": {
+    "summary": "Mock clarity surface for RTT/1 snapshot testing.",
+    "stated_elements": ["Mock element A", "Mock element B"],
+    "surface_claims": ["Mock claim A", "Mock claim B"],
+    "visible_structure": ["mock structure"],
+    "surface_vocabulary": ["mock", "structure"],
+    "declared_relationships": ["A relates to B"],
+    "surface_tensions": ["A vs B"],
+    "surface_gaps": ["Missing definition of mock term"],
+    "surface_questions": ["What is mock term?"]
+  },
+  "load_bearing": {
+    "candidates": ["mock anchor"],
+    "confirmed": ["mock anchor"],
+    "anchors": ["mock anchor"],
+    "collapse_map": {
+      "mock anchor": ["mock dependency"]
+    },
+    "relationships": ["mock anchor supports mock dependency"],
+    "questions": ["How does mock anchor propagate?"]
+  },
+  "contradiction_scan": {
+    "direct": ["mock contradiction"],
+    "implicit": ["mock implicit contradiction"],
+    "load_bearing_conflicts": ["mock anchor conflict"],
+    "propagation": ["mock contradiction propagates"],
+    "regime": ["mock regime conflict"],
+    "geometry": {
+      "type": "linear",
+      "origin": "mock anchor",
+      "spread": ["mock dependency"]
+    },
+    "questions": ["Is mock contradiction structural?"]
+  },
+  "structural_critique": {
+    "presence": ["mock anchor"],
+    "absence": ["mock missing element"],
+    "tension": ["mock tension"],
+    "stability": "semi-stable",
+    "shape": {
+      "type": "linear",
+      "anchors": ["mock anchor"],
+      "dependencies": ["mock dependency"]
+    },
+    "synthesis": "Mock synthesis describing structural behavior.",
+    "questions": ["What stabilizes mock tension?"]
+  },
+  "diagnostic_surface": {
+    "diagnostic": {
+      "summary": "Mock diagnostic summary for RTT/1 CI testing."
+    }
+  }
+}
 
