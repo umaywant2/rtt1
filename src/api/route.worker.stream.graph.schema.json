@@ -1,1 +1,198 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "RTT/1 Hybrid Graph + Streaming Worker Route Schema",
+  "description": "Schema describing the hybrid graph + streaming worker API surface for RTT/1.",
+  "type": "object",
+
+  "properties": {
+    "route": {
+      "type": "string",
+      "enum": ["graph-analyze", "graph-report", "stream-chunk", "meta"],
+      "description": "The RTT/1 hybrid worker route to invoke."
+    },
+
+    "payload": {
+      "type": "object",
+      "description": "Graph or chunk payload passed to the worker route.",
+      "properties": {
+        "graph": {
+          "type": "object",
+          "properties": {
+            "nodes": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": { "type": "string" },
+                  "label": { "type": ["string", "null"] },
+                  "payload": {
+                    "type": "object",
+                    "additionalProperties": true
+                  }
+                },
+                "required": ["id"]
+              }
+            },
+            "edges": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "from": { "type": "string" },
+                  "to": { "type": "string" }
+                },
+                "required": ["from", "to"]
+              }
+            }
+          }
+        },
+
+        "chunks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      }
+    }
+  },
+
+  "required": ["route"],
+
+  "definitions": {
+    "StreamOutput": {
+      "type": "object",
+      "description": "Combined streaming output after chunk processing.",
+      "properties": {
+        "substrate": {
+          "type": "object",
+          "properties": {
+            "signals": { "type": "array", "items": { "type": "string" } },
+            "operators": { "type": "array", "items": { "type": "string" } }
+          }
+        }
+      }
+    },
+
+    "AnalysisOutput": {
+      "type": "object",
+      "description": "Raw analysis output from analyze.js",
+      "properties": {
+        "clarity_surface": { "type": ["object", "null"] },
+        "drift": { "type": ["string", "null"] },
+        "coherence": { "type": ["number", "null"] },
+        "substrate": {
+          "type": ["object", "null"],
+          "properties": {
+            "summary": { "type": ["string", "null"] },
+            "signals": { "type": "array", "items": { "type": "string" } },
+            "operators": { "type": "array", "items": { "type": "string" } }
+          }
+        },
+        "diagnostics": {
+          "type": "object",
+          "properties": {
+            "issues": { "type": "array", "items": { "type": "string" } },
+            "warnings": { "type": "array", "items": { "type": "string" } },
+            "stats": { "type": "object" }
+          }
+        }
+      }
+    },
+
+    "ReportOutput": {
+      "type": "object",
+      "description": "Full RTT/1 report object from report.js",
+      "properties": {
+        "meta": {
+          "type": "object",
+          "properties": {
+            "module": { "type": "string" },
+            "timestamp": { "type": "number" },
+            "rtt": { "type": "number" },
+            "coherence": { "type": ["number", "null"] },
+            "drift": { "type": ["string", "null"] }
+          }
+        },
+        "substrate": {
+          "type": "object",
+          "properties": {
+            "summary": { "type": ["string", "null"] },
+            "signals": { "type": "array", "items": { "type": "string" } },
+            "operators": { "type": "array", "items": { "type": "string" } }
+          }
+        },
+        "diagnostics": {
+          "type": "object",
+          "properties": {
+            "issues": { "type": "array", "items": { "type": "string" } },
+            "warnings": { "type": "array", "items": { "type": "string" } },
+            "stats": { "type": "object" }
+          }
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "input": { "type": "object" },
+            "analysis": { "$ref": "#/definitions/AnalysisOutput" }
+          }
+        }
+      }
+    },
+
+    "GraphHybridOutput": {
+      "type": "object",
+      "description": "Hybrid graph + streaming output.",
+      "properties": {
+        "nodes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "label": { "type": ["string", "null"] },
+              "streamed": { "$ref": "#/definitions/StreamOutput" },
+              "analysis": { "$ref": "#/definitions/AnalysisOutput" },
+              "report": { "$ref": "#/definitions/ReportOutput" }
+            }
+          }
+        },
+        "edges": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "from": { "type": "string" },
+              "to": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+
+    "MetaOutput": {
+      "type": "object",
+      "description": "Metadata returned by hybrid worker meta route",
+      "properties": {
+        "rtt": { "type": "number" },
+        "module": { "type": "string" },
+        "version": { "type": "string" },
+        "environment": { "type": "string" },
+        "endpoints": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+
+    "ErrorOutput": {
+      "type": "object",
+      "description": "Error envelope for unknown routes.",
+      "properties": {
+        "error": { "type": "string" }
+      }
+    }
+  }
+}
 
