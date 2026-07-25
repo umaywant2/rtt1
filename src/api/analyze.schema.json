@@ -7,6 +7,7 @@
   "properties": {
     "module": { "type": "string" },
     "rtt": { "type": "number" },
+
     "coherence": { "type": ["number", "null"] },
     "drift": { "type": ["string", "null"] },
 
@@ -14,16 +15,28 @@
       "type": ["object", "null"],
       "properties": {
         "summary": { "type": ["string", "null"] },
-        "signals": { "type": "array", "items": { "type": "string" } },
-        "operators": { "type": "array", "items": { "type": "string" } }
+        "signals": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "operators": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
       }
     },
 
     "diagnostics": {
       "type": "object",
       "properties": {
-        "issues": { "type": "array", "items": { "type": "string" } },
-        "warnings": { "type": "array", "items": { "type": "string" } },
+        "issues": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "warnings": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
         "stats": {
           "type": "object",
           "properties": {
