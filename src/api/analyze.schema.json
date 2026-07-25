@@ -1,77 +1,39 @@
-openapi: 3.1.0
-info:
-  title: RTT/1 Analyzer API
-  version: 1.0.0-alpha
-  description: >
-    Canonical RTT/1 analyzer API surface. Produces coherence, drift,
-    substrate signals/operators, and diagnostics.
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "RTT/1 Analyzer Schema",
+  "description": "Canonical RTT/1 analyzer output schema.",
+  "type": "object",
 
-servers:
-  - url: local
-    description: Local execution (browser or worker)
+  "properties": {
+    "module": { "type": "string" },
+    "rtt": { "type": "number" },
+    "coherence": { "type": ["number", "null"] },
+    "drift": { "type": ["string", "null"] },
 
-paths:
-  /analyze:
-    post:
-      summary: Run RTT/1 substrate analysis
-      operationId: analyze
-      requestBody:
-        required: false
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/AnalyzeInput"
-      responses:
-        "200":
-          description: RTT/1 analysis output
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/AnalysisOutput"
+    "substrate": {
+      "type": ["object", "null"],
+      "properties": {
+        "summary": { "type": ["string", "null"] },
+        "signals": { "type": "array", "items": { "type": "string" } },
+        "operators": { "type": "array", "items": { "type": "string" } }
+      }
+    },
 
-components:
-  schemas:
+    "diagnostics": {
+      "type": "object",
+      "properties": {
+        "issues": { "type": "array", "items": { "type": "string" } },
+        "warnings": { "type": "array", "items": { "type": "string" } },
+        "stats": {
+          "type": "object",
+          "properties": {
+            "timestamp": { "type": "number" },
+            "length": { "type": "number" }
+          }
+        }
+      }
+    }
+  },
 
-    AnalyzeInput:
-      type: object
-      description: Input payload for RTT/1 analysis.
-      additionalProperties: true
-
-    AnalysisOutput:
-      type: object
-      required: ["module", "rtt", "coherence", "drift", "substrate", "diagnostics"]
-      properties:
-        module: { type: "string" }
-        rtt: { type: "number" }
-        coherence: { type: ["number", "null"] }
-        drift: { type: ["string", "null"] }
-        substrate:
-          type: ["object", "null"]
-          properties:
-            summary: { type: ["string", "null"] }
-            signals:
-              type: array
-              items: { type: "string" }
-            operators:
-              type: array
-              items: { type: "string" }
-        diagnostics:
-          type: object
-          properties:
-            issues:
-              type: array
-              items: { type: "string" }
-            warnings:
-              type: array
-              items: { type: "string" }
-            stats:
-              type: object
-              properties:
-                timestamp: { type: "number" }
-                length: { type: "number" }
-
-    ErrorOutput:
-      type: object
-      properties:
-        error: { type: "string" }
-
+  "required": ["module", "rtt", "substrate", "diagnostics"]
+}
