@@ -1,1 +1,30 @@
-
+{
+  "suite": "RTT/1 Examples",
+  "version": "1.0.0-alpha",
+  "modules": [
+    "example-clarity.json",
+    "example-inputs.md",
+    "example-outputs.md",
+    "example-graph.json",
+    "example-report.md",
+    "example-bundle.js"
+  ],
+  "categories": {
+    "clarity": [
+      "example-clarity.json",
+      "example-outputs.md"
+    ],
+    "inputs": [
+      "example-inputs.md"
+    ],
+    "graph": [
+      "example-graph.json"
+    ],
+    "reports": [
+      "example-report.md"
+    ],
+    "bundle": [
+      "example-bundle.js"
+    ]
+  }
+}
