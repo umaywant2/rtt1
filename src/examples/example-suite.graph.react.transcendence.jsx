@@ -1,109 +1,95 @@
-openapi: 3.1.0
-info:
-  title: RTT/1 Example Suite Graph API (Transcendence)
-  version: 1.0.0-alpha
-  description: >
-    Transcendence-tier RTT/1 example suite graph endpoint. Includes nodes,
-    edges, clarity_surface, clarity_scan, session metadata, geometry,
-    anchors, structural regime, transcendence markers, and structural signature.
+import React from "react";
+import { exampleSuiteGraphTranscendence } from "./example-suite.graph.transcendence.bundle.js";
 
-paths:
-  /examples/suite/graph/transcendence:
-    get:
-      summary: Return transcendence RTT/1 example suite graph
-      operationId: exampleSuiteGraphTranscendence
-      responses:
-        "200":
-          description: Transcendence example suite graph
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ExampleSuiteGraphTranscendence"
+export default function ExampleSuiteGraphTranscendenceReact() {
+  const graph = exampleSuiteGraphTranscendence();
 
-components:
-  schemas:
+  return (
+    <div style={{ fontFamily: "sans-serif", padding: 20 }}>
+      <h1>RTT/1 Example Suite Graph (Transcendence)</h1>
 
-    ExampleSuiteGraphTranscendence:
-      type: object
-      required:
-        - engine
-        - version
-        - session
-        - nodes
-        - edges
-        - geometry
-        - meta
-        - signature
-      properties:
-        engine: { type: "string" }
-        version: { type: "string" }
+      <SessionBlock session={graph.session} />
+      <GeometryBlock geometry={graph.geometry} />
+      <MetaBlock meta={graph.meta} />
+      <SignatureBlock signature={graph.signature} />
 
-        session:
-          type: object
-          properties:
-            rtt: { type: "number" }
-            coherence: { type: "string" }
-            drift: { type: "string" }
-            paradox: { type: "string" }
-            singularity: { type: "boolean" }
-            transcendence: { type: "boolean" }
+      {graph.nodes.map((node) => (
+        <NodeBlock key={node.id} node={node} />
+      ))}
 
-        nodes:
-          type: array
-          items:
-            $ref: "#/components/schemas/ExampleSuiteGraphNodeTranscendence"
+      <EdgesBlock edges={graph.edges} />
+    </div>
+  );
+}
 
-        edges:
-          type: array
-          items:
-            $ref: "#/components/schemas/ExampleSuiteGraphEdgeTranscendence"
+function SessionBlock({ session }) {
+  return (
+    <div style={panel}>
+      <h2>Session</h2>
+      <pre style={pre}>{JSON.stringify(session, null, 2)}</pre>
+    </div>
+  );
+}
 
-        geometry:
-          type: object
-          properties:
-            shape: { type: "string" }
-            anchors:
-              type: array
-              items: { type: "string" }
-            regime: { type: "string" }
-            collapse: { type: "string" }
-            dimensionality: { type: "string" }
+function GeometryBlock({ geometry }) {
+  return (
+    <div style={panel}>
+      <h2>Geometry</h2>
+      <pre style={pre}>{JSON.stringify(geometry, null, 2)}</pre>
+    </div>
+  );
+}
 
-        meta:
-          type: object
-          properties:
-            tier: { type: "string" }
-            strictness: { type: "string" }
-            completeness: { type: "string" }
-            finality: { type: "string" }
-            self_similarity: { type: "string" }
+function MetaBlock({ meta }) {
+  return (
+    <div style={panel}>
+      <h2>Meta</h2>
+      <pre style={pre}>{JSON.stringify(meta, null, 2)}</pre>
+    </div>
+  );
+}
 
-        signature:
-          type: object
-          properties:
-            description: { type: "string" }
-            hash: { type: "string" }
-            invariant: { type: "boolean" }
+function SignatureBlock({ signature }) {
+  return (
+    <div style={panel}>
+      <h2>Signature</h2>
+      <pre style={pre}>{JSON.stringify(signature, null, 2)}</pre>
+    </div>
+  );
+}
 
-    ExampleSuiteGraphNodeTranscendence:
-      type: object
-      required: ["id","payload","clarity_surface","clarity_scan"]
-      properties:
-        id: { type: "string" }
-        label: { type: ["string","null"] }
-        payload:
-          type: object
-          additionalProperties: true
-        clarity_surface:
-          type: object
-        clarity_scan:
-          type: object
+function NodeBlock({ node }) {
+  return (
+    <div style={panel}>
+      <h2>Node: {node.id}</h2>
+      <pre style={pre}>{JSON.stringify(node.payload, null, 2)}</pre>
 
-    ExampleSuiteGraphEdgeTranscendence:
-      type: object
-      required: ["from","to"]
-      properties:
-        from: { type: "string" }
-        to: { type: "string" }
-        label: { type: ["string","null"] }
+      <h3>Clarity Surface</h3>
+      <pre style={pre}>{JSON.stringify(node.clarity_surface, null, 2)}</pre>
 
+      <h3>Clarity Scan</h3>
+      <pre style={pre}>{JSON.stringify(node.clarity_scan, null, 2)}</pre>
+    </div>
+  );
+}
+
+function EdgesBlock({ edges }) {
+  return (
+    <div style={panel}>
+      <h2>Edges</h2>
+      <pre style={pre}>{JSON.stringify(edges, null, 2)}</pre>
+    </div>
+  );
+}
+
+const panel = {
+  border: "1px solid #ccc",
+  padding: 12,
+  marginBottom: 16
+};
+
+const pre = {
+  background: "#f7f7f7",
+  padding: 10,
+  overflowX: "auto"
+};
