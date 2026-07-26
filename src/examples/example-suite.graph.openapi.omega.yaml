@@ -1,1 +1,95 @@
+openapi: 3.1.0
+info:
+  title: RTT/1 Example Suite Graph API (Omega)
+  version: 1.0.0-alpha
+  description: >
+    Omega-tier RTT/1 example suite graph endpoint. Includes nodes,
+    edges, clarity_surface, clarity_scan, session metadata, geometry,
+    anchors, structural regime, and omega meta fields.
+
+paths:
+  /examples/suite/graph/omega:
+    get:
+      summary: Return omega RTT/1 example suite graph
+      operationId: exampleSuiteGraphOmega
+      responses:
+        "200":
+          description: Omega example suite graph
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExampleSuiteGraphOmega"
+
+components:
+  schemas:
+
+    ExampleSuiteGraphOmega:
+      type: object
+      required:
+        - engine
+        - version
+        - session
+        - nodes
+        - edges
+        - geometry
+        - meta
+      properties:
+        engine: { type: "string" }
+        version: { type: "string" }
+
+        session:
+          type: object
+          properties:
+            rtt: { type: "number" }
+            coherence: { type: "string" }
+            drift: { type: "string" }
+            paradox: { type: "string" }
+
+        nodes:
+          type: array
+          items:
+            $ref: "#/components/schemas/ExampleSuiteGraphNodeOmega"
+
+        edges:
+          type: array
+          items:
+            $ref: "#/components/schemas/ExampleSuiteGraphEdgeOmega"
+
+        geometry:
+          type: object
+          properties:
+            shape: { type: "string" }
+            anchors:
+              type: array
+              items: { type: "string" }
+            regime: { type: "string" }
+
+        meta:
+          type: object
+          properties:
+            tier: { type: "string" }
+            strictness: { type: "string" }
+            completeness: { type: "string" }
+
+    ExampleSuiteGraphNodeOmega:
+      type: object
+      required: ["id","payload","clarity_surface","clarity_scan"]
+      properties:
+        id: { type: "string" }
+        label: { type: ["string","null"] }
+        payload:
+          type: object
+          additionalProperties: true
+        clarity_surface:
+          type: object
+        clarity_scan:
+          type: object
+
+    ExampleSuiteGraphEdgeOmega:
+      type: object
+      required: ["from","to"]
+      properties:
+        from: { type: "string" }
+        to: { type: "string" }
+        label: { type: ["string","null"] }
 
