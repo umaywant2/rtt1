@@ -1,1 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>RTT/1 Example Suite Graph Dashboard (Transcendence)</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    .panel { border: 1px solid #ccc; padding: 12px; margin-bottom: 16px; }
+    pre { background: #f7f7f7; padding: 10px; overflow-x: auto; }
+  </style>
+</head>
+<body>
+
+<h1>RTT/1 Example Suite Graph Dashboard (Transcendence)</h1>
+
+<div id="root"></div>
+
+<script type="module">
+  import { exampleSuiteGraphTranscendence } from "./example-suite.graph.transcendence.bundle.js";
+
+  const graph = exampleSuiteGraphTranscendence();
+  const root = document.getElementById("root");
+
+  let html = `
+    <div class="panel">
+      <h2>Session</h2>
+      <pre>${JSON.stringify(graph.session, null, 2)}</pre>
+    </div>
+
+    <div class="panel">
+      <h2>Geometry</h2>
+      <pre>${JSON.stringify(graph.geometry, null, 2)}</pre>
+    </div>
+
+    <div class="panel">
+      <h2>Meta</h2>
+      <pre>${JSON.stringify(graph.meta, null, 2)}</pre>
+    </div>
+
+    <div class="panel">
+      <h2>Signature</h2>
+      <pre>${JSON.stringify(graph.signature, null, 2)}</pre>
+    </div>
+  `;
+
+  graph.nodes.forEach(node => {
+    html += `
+      <div class="panel">
+        <h2>Node: ${node.id}</h2>
+        <pre>${JSON.stringify(node.payload, null, 2)}</pre>
+
+        <h3>Clarity Surface</h3>
+        <pre>${JSON.stringify(node.clarity_surface, null, 2)}</pre>
+
+        <h3>Clarity Scan</h3>
+        <pre>${JSON.stringify(node.clarity_scan, null, 2)}</pre>
+      </div>
+    `;
+  });
+
+  html += `
+    <div class="panel">
+      <h2>Edges</h2>
+      <pre>${JSON.stringify(graph.edges, null, 2)}</pre>
+    </div>
+  `;
+
+  root.innerHTML = html;
+</script>
+
+</body>
+</html>
 
