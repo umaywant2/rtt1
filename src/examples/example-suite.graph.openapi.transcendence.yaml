@@ -1,57 +1,108 @@
-/**
- * RTT/1 — Example Suite Graph (Transcendence Bundle)
- * Beyond-final tier: includes nodes, edges, clarity_surface,
- * clarity_scan, session metadata, geometry, regime, meta,
- * transcendence markers, and self-describing structural signature.
- */
+openapi: 3.1.0
+info:
+  title: RTT/1 Example Suite Graph API (Transcendence)
+  version: 1.0.0-alpha
+  description: >
+    Transcendence-tier RTT/1 example suite graph endpoint. Includes nodes,
+    edges, clarity_surface, clarity_scan, session metadata, geometry,
+    anchors, structural regime, transcendence markers, and structural signature.
 
-import { exampleGraph, exampleClarity } from "./example-bundle.js";
+paths:
+  /examples/suite/graph/transcendence:
+    get:
+      summary: Return transcendence RTT/1 example suite graph
+      operationId: exampleSuiteGraphTranscendence
+      responses:
+        "200":
+          description: Transcendence example suite graph
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExampleSuiteGraphTranscendence"
 
-export function exampleSuiteGraphTranscendence() {
-  return {
-    engine: "rtt1",
-    version: "1.0.0-alpha",
+components:
+  schemas:
 
-    session: {
-      rtt: 1,
-      coherence: "declared",
-      drift: "bounded",
-      paradox: "structural",
-      singularity: true,
-      transcendence: true
-    },
+    ExampleSuiteGraphTranscendence:
+      type: object
+      required:
+        - engine
+        - version
+        - session
+        - nodes
+        - edges
+        - geometry
+        - meta
+        - signature
+      properties:
+        engine: { type: "string" }
+        version: { type: "string" }
 
-    nodes: exampleGraph.nodes.map((node, index) => ({
-      id: node.id,
-      label: node.label ?? `Node ${index + 1}`,
-      payload: node.payload,
-      clarity_surface: exampleClarity.clarity_surface,
-      clarity_scan: exampleClarity.clarity_scan
-    })),
+        session:
+          type: object
+          properties:
+            rtt: { type: "number" }
+            coherence: { type: "string" }
+            drift: { type: "string" }
+            paradox: { type: "string" }
+            singularity: { type: "boolean" }
+            transcendence: { type: "boolean" }
 
-    edges: exampleGraph.edges,
+        nodes:
+          type: array
+          items:
+            $ref: "#/components/schemas/ExampleSuiteGraphNodeTranscendence"
 
-    geometry: {
-      shape: "linear",
-      anchors: ["clarity_surface", "clarity_scan"],
-      regime: "transcendence",
-      collapse: "none",
-      dimensionality: "beyond-structural"
-    },
+        edges:
+          type: array
+          items:
+            $ref: "#/components/schemas/ExampleSuiteGraphEdgeTranscendence"
 
-    meta: {
-      tier: "transcendence",
-      strictness: "ultimate",
-      completeness: "total",
-      finality: "absolute",
-      self_similarity: "perfect"
-    },
+        geometry:
+          type: object
+          properties:
+            shape: { type: "string" }
+            anchors:
+              type: array
+              items: { type: "string" }
+            regime: { type: "string" }
+            collapse: { type: "string" }
+            dimensionality: { type: "string" }
 
-    signature: {
-      description: "Self-describing RTT/1 structural signature",
-      hash: "Ω-RTT1-TRANSCENDENCE-SIGNATURE",
-      invariant: true
-    }
-  };
-}
+        meta:
+          type: object
+          properties:
+            tier: { type: "string" }
+            strictness: { type: "string" }
+            completeness: { type: "string" }
+            finality: { type: "string" }
+            self_similarity: { type: "string" }
 
+        signature:
+          type: object
+          properties:
+            description: { type: "string" }
+            hash: { type: "string" }
+            invariant: { type: "boolean" }
+
+    ExampleSuiteGraphNodeTranscendence:
+      type: object
+      required: ["id","payload","clarity_surface","clarity_scan"]
+      properties:
+        id: { type: "string" }
+        label: { type: ["string","null"] }
+        payload:
+          type: object
+          additionalProperties: true
+        clarity_surface:
+          type: object
+        clarity_scan:
+          type: object
+
+    ExampleSuiteGraphEdgeTranscendence:
+      type: object
+      required: ["from","to"]
+      properties:
+        from: { type: "string" }
+        to: { type: "string" }
+        label: { type: ["string","null"] }
