@@ -1,1 +1,2 @@
+import{exampleGraph as g,exampleClarity as c}from"./example-bundle.js";export function exampleSuiteGraphFull(){return{engine:"rtt1",version:"1.0.0-alpha",session:{rtt:1,coherence:"declared",drift:"bounded",paradox:"structural"},nodes:g.nodes.map((n,i)=>({id:n.id,label:n.label??`Node ${i+1}`,payload:n.payload,clarity_surface:c.clarity_surface,clarity_scan:c.clarity_scan})),edges:g.edges,geometry:{shape:"linear",anchors:["clarity_surface","clarity_scan"]}};}
 
