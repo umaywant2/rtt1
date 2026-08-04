@@ -1,4 +1,4 @@
-# RTT/1 — Structural Engine (Docsbook Edition)
+# RTT/1 — Structural Engine 
 **Engine:** RTT/1  
 **Mode:** S‑mode  
 **Session:** rtt=1 · coherence=declared · drift=bounded · paradox=structural  
