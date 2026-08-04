@@ -1,4 +1,4 @@
-<img width="702" height="440" alt="rtt1 structural_map" src="https://github.com/user-attachments/assets/92581c2f-bb4a-4409-9927-6ab7f4163127" />
+<img width="693" height="693" alt="lumen_rtt1" src="https://github.com/user-attachments/assets/6484c999-a9bf-4828-aea1-4783a7507d53" />
 
 # RTT/1 — Structural Engine 
 **Engine:** RTT/1  
