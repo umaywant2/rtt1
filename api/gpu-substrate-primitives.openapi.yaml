@@ -1,1 +1,45 @@
+openapi: 3.1.0
+info:
+  title: RTT/1 GPU Substrate Primitives API
+  version: "2026.1"
 
+paths:
+  /gpu-substrate-primitives:
+    post:
+      summary: Build RTT/1 substrate primitives
+      operationId: gpuSubstratePrimitives
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SubstrateInput"
+      responses:
+        "200":
+          description: Successful RTT/1 substrate mapping
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SubstrateOutput"
+
+components:
+  schemas:
+    SubstrateInput:
+      $ref: "./gpu-substrate-primitives.schema.json"
+
+    SubstrateOutput:
+      type: object
+      properties:
+        engine:
+          type: string
+          example: "RTT/1"
+        operator:
+          type: string
+          example: "gpu-substrate-primitives"
+        version:
+          type: string
+          example: "2026.1"
+        primitives:
+          type: array
+        relationships:
+          type: array
