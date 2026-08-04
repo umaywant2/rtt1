@@ -1,6 +1,10 @@
 <img width="693" height="693" alt="lumen_rtt1" src="https://github.com/user-attachments/assets/6484c999-a9bf-4828-aea1-4783a7507d53" />
 
 # RTT/1 — Structural Engine 
+
+- [`module.json`](https://raw.githubusercontent.com/umaywant2/rtt1/refs/heads/main/module.json) — Agentic module schema role assignments
+- [`engine.json`](https://raw.githubusercontent.com/umaywant2/rtt1/refs/heads/main/engine.json) — Agentic module schema engine assignments
+
 **Engine:** RTT/1  
 **Mode:** S‑mode  
 **Session:** rtt=1 · coherence=declared · drift=bounded · paradox=structural  
